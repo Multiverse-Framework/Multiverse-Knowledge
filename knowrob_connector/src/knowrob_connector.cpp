@@ -1,4 +1,4 @@
-// #include <knowrob.ccp>
+#include <knowrob/knowrob.h>
 #include <multiverse_client_json.h>
 
 #include <map>
