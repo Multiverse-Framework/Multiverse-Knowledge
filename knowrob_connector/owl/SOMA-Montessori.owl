@@ -1,0 +1,352 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/sascha/ontologies/2025/2/untitled-ontology-131/"
+     xml:base="http://www.semanticweb.org/sascha/ontologies/2025/2/untitled-ontology-131/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:SOMA="http://www.ease-crc.org/ont/SOMA.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl">
+        <owl:imports rdf:resource="http://www.ease-crc.org/ont/SOMA-HOME.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#BigCircleInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BigCircleInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueCuboid -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueCuboid">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SquareInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueDrawer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueDrawer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriDrawer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueHighCylinder -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueHighCylinder">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BigCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SmallCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SquareInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#Designed_Inset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#Designed_Inset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriBox -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriBox">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BigCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BlueDrawer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeDrawer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#RectangleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SlotInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SmallCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SquareInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#TriangleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowDrawer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Montessori Box</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriBoxHandle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriBoxHandle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriDrawer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriDrawer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Drawer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#Designed_Inset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#Toy"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeCube -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeCube">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BigCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#RectangleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeDrawer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeDrawer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriDrawer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeTriangle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#OrangeTriangle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#RectangleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#TriangleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#RectangleInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#RectangleInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#SlotInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SlotInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#SmallCircleInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SmallCircleInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#SquareInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SquareInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#Toy -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#Toy">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#TriangleInset -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#TriangleInset">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriInset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowBall -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowBall">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#BigCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SmallCircleInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SquareInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowDrawer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowDrawer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriDrawer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowThinCylinder -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA-Montessori.owl#YellowThinCylinder">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#MontessoriShapes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#fitsIntoShape"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA-Montessori.owl#SlotInset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.12.2019-05-06T20:49:08Z) https://github.com/owlcs/owlapi -->
+
