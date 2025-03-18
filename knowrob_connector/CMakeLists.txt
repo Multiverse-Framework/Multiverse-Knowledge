@@ -32,7 +32,7 @@ pkg_check_modules(SWIPL REQUIRED swipl)
 pkg_check_modules(MONGOC REQUIRED libmongoc-1.0)
 pkg_check_modules(RAPTOR REQUIRED raptor2)
 pkg_check_modules(REDLAND REQUIRED redland)
-find_package(Python COMPONENTS Interpreter Development)
+find_package(Python COMPONENTS Interpreter)
 find_package(spdlog REQUIRED)
 
 set(KNOWROB_LIBRARIES
@@ -48,6 +48,7 @@ function(build_knowrob_connector)
     add_library(${KNOWROB_CONNECTOR} SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/knowrob_connector.cpp)
 
     target_include_directories(${KNOWROB_CONNECTOR} PRIVATE
+        /usr/include/python3.8
         ${CMAKE_CURRENT_SOURCE_DIR}/multiverse_client/include
         ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/include
         ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/src/integration/python
@@ -69,7 +70,7 @@ function(build_knowrob_connector)
         )
 
         install(TARGETS ${KNOWROB_CONNECTOR} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libknowrob_connector.so DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib RENAME knowrob_connector.so)
+        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libknowrob_connector.so DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib RENAME knowrob.so)
     elseif(WIN32)
         # Windows-specific linking (if needed)
         # target_link_libraries(${MULTIVERSE_CLIENT_JSON} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.dll)
