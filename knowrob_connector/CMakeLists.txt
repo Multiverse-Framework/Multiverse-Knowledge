@@ -68,6 +68,8 @@ function(build_knowrob_connector)
         install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libknowrob_connector.so DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib RENAME knowrob.so)
     elseif (WIN32)
         # Windows-specific linking (if needed)
+        # target_link_libraries(${MULTIVERSE_CLIENT_JSON} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.dll)
+        # install(TARGETS ${MULTIVERSE_CLIENT_JSON} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
     endif()
 endfunction()
 
