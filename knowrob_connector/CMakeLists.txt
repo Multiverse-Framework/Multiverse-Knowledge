@@ -11,12 +11,13 @@ set(Boost_Python_COMPONENT "Boost::${Boost_Python_VERSION}")
 message(STATUS "Using Boost Python component: ${Boost_Python_COMPONENT}")
 
 # Set Boost configurations
-set(Boost_USE_STATIC_LIBS OFF)  # Use shared libraries by default
+set(Boost_USE_STATIC_LIBS OFF) # Use shared libraries by default
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
 # Find Boost and Boost.Python
 find_package(Boost 1.50 REQUIRED COMPONENTS program_options serialization ${Boost_Python_VERSION})
+
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost not found!")
 endif()
@@ -31,21 +32,23 @@ pkg_check_modules(SWIPL REQUIRED swipl)
 pkg_check_modules(MONGOC REQUIRED libmongoc-1.0)
 pkg_check_modules(RAPTOR REQUIRED raptor2)
 pkg_check_modules(REDLAND REQUIRED redland)
-find_package(Python COMPONENTS Interpreter Development)
+find_package(Python COMPONENTS Interpreter)
 find_package(spdlog REQUIRED)
 
 set(KNOWROB_LIBRARIES
-  ${SWIPL_LIBRARIES}
-  ${MONGOC_LIBRARIES}
-  ${RAPTOR_LIBRARIES}
-  ${REDLAND_LIBRARIES}
-  ${Python_LIBRARIES}
-  spdlog::spdlog)
+    ${SWIPL_LIBRARIES}
+    ${MONGOC_LIBRARIES}
+    ${RAPTOR_LIBRARIES}
+    ${REDLAND_LIBRARIES}
+    ${Python_LIBRARIES}
+    spdlog::spdlog
+)
 
 function(build_knowrob_connector)
     add_library(${KNOWROB_CONNECTOR} SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/knowrob_connector.cpp)
 
-    target_include_directories(${KNOWROB_CONNECTOR} PRIVATE 
+    target_include_directories(${KNOWROB_CONNECTOR} PRIVATE
+        /usr/include/python3.8
         ${CMAKE_CURRENT_SOURCE_DIR}/multiverse_client/include
         ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/include
         ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/src/integration/python
@@ -55,18 +58,20 @@ function(build_knowrob_connector)
         ${REDLAND_INCLUDE_DIRS}
         ${Python_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
-        ${Boost_INCLUDE_DIRS})
+        ${Boost_INCLUDE_DIRS}
+    )
 
-    if (UNIX)
-        target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE 
+    if(UNIX)
+        target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.so
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/libknowrob.so
-            ${Boost_LIBRARIES}  # Ensure all Boost libraries are linked
-            ${Boost_PYTHON_LIBRARY})  # Explicitly link Boost.Python
+            ${Boost_LIBRARIES} # Ensure all Boost libraries are linked
+            ${Boost_PYTHON_LIBRARY} # Explicitly link Boost.Python
+        )
 
         install(TARGETS ${KNOWROB_CONNECTOR} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
         install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libknowrob_connector.so DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib RENAME knowrob.so)
-    elseif (WIN32)
+    elseif(WIN32)
         # Windows-specific linking (if needed)
         # target_link_libraries(${MULTIVERSE_CLIENT_JSON} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.dll)
         # install(TARGETS ${MULTIVERSE_CLIENT_JSON} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
