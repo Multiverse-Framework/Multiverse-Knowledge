@@ -1,0 +1,31 @@
+{
+    "logging": {
+        "console-sink": {"level": "debug"},
+        "file-sink": {"level": "debug"}
+    },
+    "semantic-web": {
+        "prefixes": [
+            {"alias": "USD", "uri": "https://ease-crc.org/ont/USD.owl"},
+            {"alias": "SOMA", "uri": "http://www.ease-crc.org/ont/SOMA.owl"}
+        ]
+    },
+    "data-sources": [
+        {"path": "owl/USD.owl", "format": "rdf-xml"},
+        {"path": "owl/SOMA-Montessori.owl", "format": "rdf-xml"}
+    ],
+    "data-backends": [
+        {
+          "type": "Redland",
+          "name": "redland",
+          "read-only": false
+        }
+    ],  
+    "reasoner": [
+        {
+          "type": "MultiverseReasoner",
+          "name": "multiverse",
+          "lib": "lib/libknowrob_connector.so",
+          "data-backend": "redland"
+        }
+    ]
+}
