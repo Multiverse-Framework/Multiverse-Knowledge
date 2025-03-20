@@ -36,65 +36,13 @@ std::map<std::string, size_t> attribute_map_double = {
 std::set<std::string> supported_properties = {
     "position"};
 
-class MultiverseReasoner : public knowrob::RDFGoalReasoner {
-public:
-    MultiverseReasoner(std::string_view) {
-        // Use all elements of supported_properties to define relations
-        for (const std::string &property : supported_properties) {
-            defineRelation(knowrob::PredicateIndicator(property, 2));
-        }
-    }
-
-    bool initializeReasoner(const knowrob::PropertyTree &ptree) {
-        return true;
-    }
-
-    bool evaluate(knowrob::RDFGoalPtr goal) {
-        auto literal = goal->rdfLiterals().at(0);
-        knowrob::TermPtr s = literal->subjectTerm();
-        knowrob::TermPtr o = literal->objectTerm();
-        knowrob::TermPtr p = literal->propertyTerm();
-        // Check if subject is a atom and object is a literal
-        if (s->isAtomic() && p->isAtomic() &&  o->isVariable()) {
-            // Get var of subject 
-            auto s_atomic = std::static_pointer_cast<knowrob::Atomic>(s);
-            // s_atomic->stringForm() to get string
-            // Get var of object
-            auto o_var = std::static_pointer_cast<knowrob::Variable>(o);
-            // Check value of property is position
-            auto p_atomic = std::static_pointer_cast<knowrob::Atomic>(p);
-            if (p_atomic->stringForm() == "position") {
-                // First create xsdatomics for all the values, then a listterm containing them
-                // Create xsdatomic for all the values using the create function
-                auto x = knowrob::XSDAtomic::create("0.0", "http://www.w3.org/2001/XMLSchema#double");
-                auto y = knowrob::XSDAtomic::create("0.0", "http://www.w3.org/2001/XMLSchema#double");
-                auto z = knowrob::XSDAtomic::create("0.0", "http://www.w3.org/2001/XMLSchema#double");
-                // create vector of terms
-                std::vector<knowrob::TermPtr> terms = {x, y, z};
-                // Create listterm using the terms
-                auto result_list = std::make_shared<knowrob::ListTerm>(terms);
-                // Create bindings
-                auto bindings = std::make_shared<knowrob::Bindings>();
-                // Bind the data to the object and attribute
-                bindings->set(o_var, result_list);
-                // Return the bindings
-                goal->push(bindings);
-                return true;
-            }
-        }
-        return false;
-    }
-};
-
-// define the plugin
-REASONER_PLUGIN(MultiverseReasoner, "MultiverseReasoner");
 
 class MultiverseKnowRobConnector : public MultiverseClientJson
 {
 public:
     MultiverseKnowRobConnector(
-        const std::string &world_name, 
-        const std::string &simulation_name, 
+        const std::string &world_name,
+        const std::string &simulation_name,
         const std::string &in_host,
         const std::string &in_server_port,
         const std::string &in_client_port)
@@ -110,27 +58,29 @@ public:
         host = in_host;
         server_port = in_server_port;
         client_port = in_client_port;
+
+        // create mockup data
+        double position_1[3] = {1.0, 2.0, 3.0};
+        double position_2[3] = {3.0, 4.0, 5.0};
+        double quaternion_1[4] = {1.3, 1.0, 2.0, 3.0};
+        double quaternion_2[4] = {1.3, 3.0, 4.0, 5.0};
+        receive_objects_data = {
+            {"object1",
+             {{"position", {&position_1[0], &position_1[1], &position_1[2]}},
+              {"quaternion", {&quaternion_1[0], &quaternion_1[1], &quaternion_1[2], &quaternion_1[3]}}}},
+            {"object2",
+             {{"position", {&position_2[0], &position_2[1], &position_2[2]}},
+              {"quaternion", {&quaternion_2[0], &quaternion_2[1], &quaternion_2[2], &quaternion_2[3]}}}}};
     }
 
     ~MultiverseKnowRobConnector()
     {
-
     }
 
 public:
-    std::vector<double *> get_receive_object_data(const std::string &object_name, const std::string &attribute_name)
+    std::map<std::string, std::map<std::string, std::vector<double *>>> get_receive_objects_data() const
     {
-        if (receive_objects_data.find(object_name) == receive_objects_data.end())
-        {
-            printf("Object %s not found\n", object_name.c_str());
-            return {};
-        }
-        if (receive_objects_data[object_name].find(attribute_name) == receive_objects_data[object_name].end())
-        {
-            printf("Attribute %s not found\n", attribute_name.c_str());
-            return {};
-        }
-        return receive_objects_data[object_name][attribute_name];
+        return receive_objects_data;
     }
 
 private:
@@ -141,7 +91,6 @@ private:
 
     void wait_for_connect_to_server_thread_finish() override
     {
-
     }
 
     void start_meta_data_thread() override
@@ -151,7 +100,6 @@ private:
 
     void wait_for_meta_data_thread_finish() override
     {
-
     }
 
     bool init_objects(bool) override
@@ -192,17 +140,14 @@ private:
 
     void bind_response_meta_data() override
     {
-
     }
 
     void bind_api_callbacks() override
     {
-
     }
 
     void bind_api_callbacks_response() override
     {
-
     }
 
     void init_send_and_receive_data() override
@@ -243,7 +188,6 @@ private:
 
     void bind_receive_data() override
     {
-
     }
 
     void clean_up() override
@@ -271,3 +215,119 @@ private:
     double sim_start_time;
 };
 
+
+class MultiverseReasoner : public knowrob::RDFGoalReasoner
+{
+public:
+    MultiverseReasoner(std::string_view)
+    {
+        // Use all elements of supported_properties to define relations
+        for (const std::string &property : supported_properties)
+        {
+            defineRelation(knowrob::PredicateIndicator(property, 2));
+        }
+    }
+
+    ~MultiverseReasoner()
+    {
+        if (connector != nullptr)
+        {
+            delete connector;
+        }
+    }
+
+    bool initializeReasoner(const knowrob::PropertyTree &ptree)
+    {
+        // Get the world_name, simulation_name, host, server_port, and client_port from the ptree, default values should be null
+        auto world_name = ptree->get_optional<std::string>("world_name");
+        auto simulation_name = ptree->get_optional<std::string>("simulation_name");
+        auto host = ptree->get_optional<std::string>("host");
+        auto server_port = ptree->get_optional<std::string>("server_port");
+        auto client_port = ptree->get_optional<std::string>("client_port");
+        // Check if any of the values are empty, print individual error messages and return false
+        if (!world_name.has_value())    
+        {
+            KB_ERROR("world_name is not set");
+            return false;
+        }
+        if (!simulation_name.has_value())
+        {
+            KB_ERROR("simulation_name is not set");
+            return false;
+        }
+        if (!host.has_value())
+        {
+            KB_ERROR("host is not set");
+            return false;
+        }
+        if (!server_port.has_value())
+        {
+            KB_ERROR("server_port is not set");
+            return false;
+        }
+        if (!client_port.has_value())
+        {
+            KB_ERROR("client_port is not set");
+            return false;
+        }
+        // Create the MultiverseKnowRobConnector object, using std_unique_ptr
+        connector = new MultiverseKnowRobConnector(world_name.value(), simulation_name.value(), host.value(), server_port.value(), client_port.value());
+        return true;
+    }
+
+    bool evaluate(knowrob::RDFGoalPtr goal)
+    {
+        auto literal = goal->rdfLiterals().at(0);
+        knowrob::TermPtr s = literal->subjectTerm();
+        knowrob::TermPtr o = literal->objectTerm();
+        knowrob::TermPtr p = literal->propertyTerm();
+        // Check if subject is a atom and object is a literal
+        if (s->isAtomic() && p->isAtomic() && o->isVariable())
+        {
+            // Get var of subject
+            auto s_atomic = std::static_pointer_cast<knowrob::Atomic>(s);
+            // s_atomic->stringForm() to get string
+            // Get var of object
+            auto o_var = std::static_pointer_cast<knowrob::Variable>(o);
+            // Check value of property is position
+            auto p_atomic = std::static_pointer_cast<knowrob::Atomic>(p);
+            // Check if the object is in get_receive_objects_data
+            auto receive_objects_data = connector->get_receive_objects_data();
+            if (receive_objects_data.find(std::string(s_atomic->stringForm())) == receive_objects_data.end())
+            {
+                return false;
+            }
+            // Check if the property is in the receive_objects_data
+            auto object_it = receive_objects_data.find(std::string(s_atomic->stringForm()));
+            if (object_it == receive_objects_data.end() || object_it->second.find(std::string(p_atomic->stringForm())) == object_it->second.end())
+            {
+                return false;
+            }
+            // Get the data from the receive_objects_data
+            auto data = receive_objects_data[std::string(s_atomic->stringForm())][std::string(p_atomic->stringForm())];
+            // Create xsdatomics for all the values, then a listterm containing them
+            // Create xsdatomic for all the values using the create function
+            std::vector<knowrob::TermPtr> terms;
+            for (double *value : data)
+            {
+                auto x = knowrob::XSDAtomic::create(std::to_string(*value), "http://www.w3.org/2001/XMLSchema#double");
+                terms.push_back(x);
+            }
+            // Create listterm using the terms
+            auto result_list = std::make_shared<knowrob::ListTerm>(terms);
+            // Create bindings
+            auto bindings = std::make_shared<knowrob::Bindings>();
+            // Bind the data to the object and attribute
+            bindings->set(o_var, result_list);
+            // Return the bindings
+            goal->push(bindings);
+        }
+        return true;
+    }
+
+private:
+    MultiverseKnowRobConnector *connector = nullptr;
+};
+
+// define the plugin
+REASONER_PLUGIN(MultiverseReasoner, "MultiverseReasoner");

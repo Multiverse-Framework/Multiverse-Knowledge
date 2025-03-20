@@ -19,7 +19,7 @@ function(build_knowrob_connector)
     if(UNIX)
         target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE 
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.so
-            ${CMAKE_CURRENT_SOURCE_DIR}/lib/knowrob.so
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib/libknowrob_src.so
         )
         install(TARGETS ${KNOWROB_CONNECTOR} DESTINATION 
             ${CMAKE_CURRENT_SOURCE_DIR}/lib

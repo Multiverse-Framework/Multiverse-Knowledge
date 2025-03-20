@@ -31,6 +31,46 @@ def runQuery(queryStr):
         result = resultQueue.pop_front()
     return retq
 
-res = runQuery("position(someobject, ?x)")
+# Write tests for this mockup data (fail if not working)
 
-print(str(res))
+# Query position and quaternion of object1
+res = runQuery("position(object1, P), quaternion(object1, Q)")
+# unit test for the above query
+assert res is not None
+assert len(res) == 2
+assert res["P"][0] == 1.0
+assert res["P"][1] == 2.0
+assert res["P"][2] == 3.0
+assert res["Q"][0] == 1.3
+assert res["Q"][1] == 1.0
+assert res["Q"][2] == 2.0
+assert res["Q"][3] == 3.0
+
+# Query only position of object2
+res = runQuery("position(object2, P)")
+# unit test for the above query
+assert res is not None
+assert len(res) == 1
+assert res["P"][0] == 3.0
+assert res["P"][1] == 4.0
+assert res["P"][2] == 5.0
+
+# Query only quaternion of object2
+res = runQuery("quaternion(object2, Q)")
+# unit test for the above query
+assert res is not None
+assert len(res) == 1
+assert res["Q"][0] == 1.3
+assert res["Q"][1] == 3.0
+assert res["Q"][2] == 4.0
+assert res["Q"][3] == 5.0
+
+# Query for non-existing object
+res = runQuery("position(object3, P)")
+# unit test for the above query
+assert res is None
+
+# Query for non-existing attribute
+res = runQuery("midichlorian_count(object1, Q)")
+# unit test for the above query
+assert res is None
