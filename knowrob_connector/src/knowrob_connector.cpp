@@ -34,7 +34,8 @@ std::map<std::string, size_t> attribute_map_double = {
 
 // list of supported properties
 std::set<std::string> supported_properties = {
-    "position"};
+    "position",
+    "quaternion"};
 
 
 class MultiverseKnowRobConnector : public MultiverseClientJson
@@ -315,6 +316,7 @@ public:
             }
             // Create listterm using the terms
             auto result_list = std::make_shared<knowrob::ListTerm>(terms);
+            
             // Create bindings
             auto bindings = std::make_shared<knowrob::Bindings>();
             // Bind the data to the object and attribute

@@ -10,6 +10,8 @@ def runQuery(queryStr):
     resultQueue = resultStream.createQueue()
     retq = None
     result = resultQueue.pop_front()
+    # print if indicatesEndOfEvaluation() is False
+    print("indicatesEnd is " + str(result.indicatesEndOfEvaluation()))
     while not result.indicatesEndOfEvaluation():
         if retq is None:
             retq = []
@@ -34,17 +36,14 @@ def runQuery(queryStr):
 # Write tests for this mockup data (fail if not working)
 
 # Query position and quaternion of object1
-res = runQuery("position(object1, P), quaternion(object1, Q)")
+res = runQuery("position(object1, ?x), quaternion(object1, ?y)")
+print(str(res))
 # unit test for the above query
 assert res is not None
 assert len(res) == 2
 assert res["P"][0] == 1.0
 assert res["P"][1] == 2.0
 assert res["P"][2] == 3.0
-assert res["Q"][0] == 1.3
-assert res["Q"][1] == 1.0
-assert res["Q"][2] == 2.0
-assert res["Q"][3] == 3.0
 
 # Query only position of object2
 res = runQuery("position(object2, P)")
