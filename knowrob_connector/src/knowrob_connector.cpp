@@ -61,10 +61,12 @@ public:
         client_port = in_client_port;
 
         // create mockup data
-        double position_1[3] = {1.0, 2.0, 3.0};
-        double position_2[3] = {3.0, 4.0, 5.0};
-        double quaternion_1[4] = {1.3, 1.0, 2.0, 3.0};
-        double quaternion_2[4] = {1.3, 3.0, 4.0, 5.0};
+        // Initialize member arrays instead of local ones
+        position_1[0] = 1.0; position_1[1] = 2.0; position_1[2] = 3.0;
+        position_2[0] = 3.0; position_2[1] = 4.0; position_2[2] = 5.0;
+        quaternion_1[0] = 1.3; quaternion_1[1] = 1.0; quaternion_1[2] = 2.0; quaternion_1[3] = 3.0;
+        quaternion_2[0] = 1.3; quaternion_2[1] = 3.0; quaternion_2[2] = 4.0; quaternion_2[3] = 5.0;
+
         receive_objects_data = {
             {"object1",
              {{"position", {&position_1[0], &position_1[1], &position_1[2]}},
@@ -72,6 +74,7 @@ public:
             {"object2",
              {{"position", {&position_2[0], &position_2[1], &position_2[2]}},
               {"quaternion", {&quaternion_2[0], &quaternion_2[1], &quaternion_2[2], &quaternion_2[3]}}}}};
+
     }
 
     ~MultiverseKnowRobConnector()
@@ -212,6 +215,11 @@ private:
     std::map<std::string, std::map<std::string, std::vector<double *>>> send_objects_data;
 
     std::map<std::string, std::map<std::string, std::vector<double *>>> receive_objects_data;
+
+    double position_1[3];
+    double position_2[3];
+    double quaternion_1[4];
+    double quaternion_2[4];
 
     double sim_start_time;
 };
