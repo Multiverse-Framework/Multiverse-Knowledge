@@ -16,7 +16,7 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
 # Find Boost and Boost.Python
-find_package(Boost 1.50 REQUIRED COMPONENTS program_options serialization ${Boost_Python_VERSION})
+find_package(Boost 1.50 REQUIRED CONFIG COMPONENTS program_options serialization ${Boost_Python_VERSION})
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost not found!")
