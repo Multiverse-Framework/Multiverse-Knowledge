@@ -5,45 +5,6 @@ project(KnowRobConnector)
 set(KNOWROB_CONNECTOR knowrob_connector)
 set(CMAKE_CXX_STANDARD 17)
 
-# Construct Boost Python component name based on Python version
-set(Boost_Python_VERSION "python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
-set(Boost_Python_COMPONENT "Boost::${Boost_Python_VERSION}")
-message(STATUS "Using Boost Python component: ${Boost_Python_COMPONENT}")
-
-# Set Boost configurations
-set(Boost_USE_STATIC_LIBS OFF) # Use shared libraries by default
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-
-# Find Boost and Boost.Python
-find_package(Boost 1.50 REQUIRED COMPONENTS program_options serialization ${Boost_Python_VERSION})
-
-if(NOT Boost_FOUND)
-    message(FATAL_ERROR "Boost not found!")
-endif()
-
-# Explicitly set Boost.Python library path if necessary
-set(Boost_PYTHON_LIBRARY /usr/lib/x86_64-linux-gnu/libboost_python38.so)
-message(STATUS "Boost Python Library: ${Boost_PYTHON_LIBRARY}")
-
-INCLUDE(FindPkgConfig)
-
-pkg_check_modules(SWIPL REQUIRED swipl)
-pkg_check_modules(MONGOC REQUIRED libmongoc-1.0)
-pkg_check_modules(RAPTOR REQUIRED raptor2)
-pkg_check_modules(REDLAND REQUIRED redland)
-find_package(Python COMPONENTS Interpreter)
-find_package(spdlog REQUIRED)
-
-set(KNOWROB_LIBRARIES
-    ${SWIPL_LIBRARIES}
-    ${MONGOC_LIBRARIES}
-    ${RAPTOR_LIBRARIES}
-    ${REDLAND_LIBRARIES}
-    ${Python_LIBRARIES}
-    spdlog::spdlog
-)
-
 function(build_knowrob_connector)
     add_library(${KNOWROB_CONNECTOR} SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/knowrob_connector.cpp)
     target_include_directories(${KNOWROB_CONNECTOR} PRIVATE 
