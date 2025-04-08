@@ -16,7 +16,7 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
 # Find Boost and Boost.Python
-find_package(Boost 1.50 REQUIRED CONFIG COMPONENTS program_options serialization ${Boost_Python_VERSION})
+find_package(Boost 1.50 REQUIRED COMPONENTS program_options serialization ${Boost_Python_VERSION})
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost not found!")
@@ -46,33 +46,24 @@ set(KNOWROB_LIBRARIES
 
 function(build_knowrob_connector)
     add_library(${KNOWROB_CONNECTOR} SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/knowrob_connector.cpp)
-
-    target_include_directories(${KNOWROB_CONNECTOR} PRIVATE
-        /usr/include/python3.8
+    target_include_directories(${KNOWROB_CONNECTOR} PRIVATE 
         ${CMAKE_CURRENT_SOURCE_DIR}/multiverse_client/include
         ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/src/integration/python
-        ${SWIPL_INCLUDE_DIRS}
-        ${MONGOC_INCLUDE_DIRS}
-        ${RAPTOR_INCLUDE_DIRS}
-        ${REDLAND_INCLUDE_DIRS}
-        ${Python_INCLUDE_DIRS}
-        ${EIGEN3_INCLUDE_DIR}
-        ${Boost_INCLUDE_DIRS}
+    )
+    target_link_directories(${KNOWROB_CONNECTOR} PRIVATE 
+        ${CMAKE_CURRENT_SOURCE_DIR}/multiverse_client/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/knowrob/include
     )
 
     if(UNIX)
-        target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE
+        target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE 
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.so
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/libknowrob.so
-            ${Boost_LIBRARIES} # Ensure all Boost libraries are linked
-            ${Boost_PYTHON_LIBRARY} # Explicitly link Boost.Python
         )
-
-        install(TARGETS ${KNOWROB_CONNECTOR} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libknowrob_connector.so DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib RENAME knowrob.so)
+        install(TARGETS ${KNOWROB_CONNECTOR} DESTINATION 
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib
+        )
     elseif(WIN32)
-        # Windows-specific linking (if needed)
         # target_link_libraries(${MULTIVERSE_CLIENT_JSON} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.dll)
         # install(TARGETS ${MULTIVERSE_CLIENT_JSON} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
     endif()
