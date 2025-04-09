@@ -37,7 +37,6 @@ std::set<std::string> supported_properties = {
     "position",
     "quaternion"};
 
-
 class MultiverseKnowRobConnector : public MultiverseClientJson
 {
 public:
@@ -60,21 +59,37 @@ public:
         server_port = in_server_port;
         client_port = in_client_port;
 
+        receive_objects = {
+            {"object1", {"position", "quaternion"}},
+            {"object2", {"position", "quaternion"}}};
+
+        connect();
+
+        *world_time = 0.0;
+
+        reset();
+
+        KB_INFO("MultiverseKnowRobConnector initialized with"
+                ": world_name: " + world_name +
+                ", simulation_name: " + simulation_name +
+                ", host: " + host +
+                ", server_port: " + server_port +
+                ", client_port: " + client_port + "\n");
+
         // create mockup data
         // Initialize member arrays instead of local ones
-        position_1[0] = 1.0; position_1[1] = 2.0; position_1[2] = 3.0;
-        position_2[0] = 3.0; position_2[1] = 4.0; position_2[2] = 5.0;
-        quaternion_1[0] = 1.3; quaternion_1[1] = 1.0; quaternion_1[2] = 2.0; quaternion_1[3] = 3.0;
-        quaternion_2[0] = 1.3; quaternion_2[1] = 3.0; quaternion_2[2] = 4.0; quaternion_2[3] = 5.0;
+        // position_1[0] = 1.0; position_1[1] = 2.0; position_1[2] = 3.0;
+        // position_2[0] = 3.0; position_2[1] = 4.0; position_2[2] = 5.0;
+        // quaternion_1[0] = 1.3; quaternion_1[1] = 1.0; quaternion_1[2] = 2.0; quaternion_1[3] = 3.0;
+        // quaternion_2[0] = 1.3; quaternion_2[1] = 3.0; quaternion_2[2] = 4.0; quaternion_2[3] = 5.0;
 
-        receive_objects_data = {
-            {"object1",
-             {{"position", {&position_1[0], &position_1[1], &position_1[2]}},
-              {"quaternion", {&quaternion_1[0], &quaternion_1[1], &quaternion_1[2], &quaternion_1[3]}}}},
-            {"object2",
-             {{"position", {&position_2[0], &position_2[1], &position_2[2]}},
-              {"quaternion", {&quaternion_2[0], &quaternion_2[1], &quaternion_2[2], &quaternion_2[3]}}}}};
-
+        // receive_objects_data = {
+        //     {"object1",
+        //      {{"position", {&position_1[0], &position_1[1], &position_1[2]}},
+        //       {"quaternion", {&quaternion_1[0], &quaternion_1[1], &quaternion_1[2], &quaternion_1[3]}}}},
+        //     {"object2",
+        //      {{"position", {&position_2[0], &position_2[1], &position_2[2]}},
+        //       {"quaternion", {&quaternion_2[0], &quaternion_2[1], &quaternion_2[2], &quaternion_2[3]}}}}};
     }
 
     ~MultiverseKnowRobConnector()
@@ -85,6 +100,31 @@ public:
     std::map<std::string, std::map<std::string, std::vector<double *>>> get_receive_objects_data() const
     {
         return receive_objects_data;
+    }
+
+    void start()
+    {
+        communication_thread = std::thread([this]()
+                                           {
+            while (!stop_thread)
+            {
+                if (!communicate())
+                {
+                    break;
+                }
+                KB_INFO("Communicating with server...");
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            } });
+    }
+
+    void stop()
+    {
+        stop_thread = true;
+        if (communication_thread.joinable())
+        {
+            communication_thread.join();
+        }
     }
 
 private:
@@ -216,14 +256,17 @@ private:
 
     std::map<std::string, std::map<std::string, std::vector<double *>>> receive_objects_data;
 
-    double position_1[3];
-    double position_2[3];
-    double quaternion_1[4];
-    double quaternion_2[4];
-
     double sim_start_time;
-};
 
+    std::thread communication_thread;
+
+    bool stop_thread = false;
+
+    // double position_1[3];
+    // double position_2[3];
+    // double quaternion_1[4];
+    // double quaternion_2[4];
+};
 
 class MultiverseReasoner : public knowrob::RDFGoalReasoner
 {
@@ -241,6 +284,7 @@ public:
     {
         if (connector != nullptr)
         {
+            connector->stop();
             delete connector;
         }
     }
@@ -254,7 +298,7 @@ public:
         auto server_port = ptree->get_optional<std::string>("server_port");
         auto client_port = ptree->get_optional<std::string>("client_port");
         // Check if any of the values are empty, print individual error messages and return false
-        if (!world_name.has_value())    
+        if (!world_name.has_value())
         {
             KB_ERROR("world_name is not set");
             return false;
@@ -279,8 +323,10 @@ public:
             KB_ERROR("client_port is not set");
             return false;
         }
+
         // Create the MultiverseKnowRobConnector object, using std_unique_ptr
         connector = new MultiverseKnowRobConnector(world_name.value(), simulation_name.value(), host.value(), server_port.value(), client_port.value());
+        connector->start();
         return true;
     }
 
@@ -324,7 +370,7 @@ public:
             }
             // Create listterm using the terms
             auto result_list = std::make_shared<knowrob::ListTerm>(terms);
-            
+
             // Create bindings
             auto bindings = std::make_shared<knowrob::Bindings>();
             // Bind the data to the object and attribute
