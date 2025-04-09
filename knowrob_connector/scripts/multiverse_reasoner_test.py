@@ -3,7 +3,7 @@ import json
 
 InitKnowRob()
 
-kb = KnowledgeBase("/home/sascha/workspace/multiverse_krr/Multiverse-Knowledge/knowrob_connector/settings/multiverse.json")
+kb = KnowledgeBase("settings/multiverse.json")
 
 def runQuery(queryStr):
     phi = QueryParser.parse(queryStr)
