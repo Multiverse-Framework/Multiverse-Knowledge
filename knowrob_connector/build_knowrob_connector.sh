@@ -14,3 +14,6 @@ echo "Building KnowRob Connector using CMake: $CMAKE_EXECUTABLE"
 $CMAKE_EXECUTABLE -S $PWD -B build -DCMAKE_INSTALL_PREFIX:PATH=$PWD
 make -C build
 $CMAKE_EXECUTABLE --install build
+
+echo "Copying shared library to lib"
+cp build/libknowrob_connector.so lib/
