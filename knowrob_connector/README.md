@@ -49,7 +49,7 @@ sudo apt install gcc-11 g++-11 -y
 To install this package run 
 
 ```bash
-./build_knowrob_connectome.sh
+./build_knowrob_connector.sh
 ```
 
 This will build a shared library and copy it to the `lib` directory.
@@ -68,10 +68,25 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)/dist-packages
 
 ### Usage
 
+Download [this](https://nc.uni-bremen.de/index.php/s/Pc8am8SpoQLA9cF), open it and follow the instructions
+
+Run `multiverse_server`
+
+```bash
+cd multiverse/multiverse_server
+./multiverse_server
+```
+
+Run the simulation
+
+```bash
+./multiverse/mujoco-3.3.0/bin/simulate ./resources/montessory_toys.xml
+```
+
 To test this package in Python run
 
 ```bash
-> python3 scripts/multiverse_reasoner_test.py 
+python3 scripts/multiverse_reasoner_test.py 
 ```
 
 ## Using Docker

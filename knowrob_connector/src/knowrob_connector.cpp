@@ -60,8 +60,7 @@ public:
         client_port = in_client_port;
 
         receive_objects = {
-            {"object1", {"position", "quaternion"}},
-            {"object2", {"position", "quaternion"}}};
+            {"", {"position", "quaternion"}}};
 
         connect();
 
@@ -104,18 +103,20 @@ public:
 
     void start()
     {
+        communicate(true);
+        communicate();
         communication_thread = std::thread([this]()
                                            {
             while (!stop_thread)
             {
+                KB_INFO("Communicating with server...");
                 if (!communicate())
                 {
                     break;
                 }
-                KB_INFO("Communicating with server...");
-
                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             } });
+        KB_INFO("Started MultiverseKnowRobConnector");
     }
 
     void stop()
@@ -184,6 +185,27 @@ private:
 
     void bind_response_meta_data() override
     {
+        KB_INFO("Received meta data from server: " + response_meta_data_str);
+
+        send_objects.clear();
+        for (const std::string &object_name : response_meta_data_json["send"].getMemberNames())
+        {
+            send_objects[object_name] = {};
+            for (const std::string &attribute_name : response_meta_data_json["send"][object_name].getMemberNames())
+            {
+                send_objects[object_name].insert(attribute_name);
+            }
+        }
+
+        receive_objects.clear();
+        for (const std::string &object_name : response_meta_data_json["receive"].getMemberNames())
+        {
+            receive_objects[object_name] = {};
+            for (const std::string &attribute_name : response_meta_data_json["receive"][object_name].getMemberNames())
+            {
+                receive_objects[object_name].insert(attribute_name);
+            }
+        }
     }
 
     void bind_api_callbacks() override
