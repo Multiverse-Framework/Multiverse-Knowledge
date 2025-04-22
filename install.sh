@@ -44,5 +44,3 @@ else
     
     $PYTHON_EXECUTABLE $USD_SRC_DIR/build_scripts/build_usd.py $USD_BUILD_DIR
 fi
-
-(cd ease_lexical_resources/src && $PYTHON_EXECUTABLE -m pip install -e .)

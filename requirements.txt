@@ -1,2 +1,4 @@
+pyside6
+pyopengl
 owlready2
 inflection
