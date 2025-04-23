@@ -206,4 +206,17 @@
   <keyframe>
     <key name="home" />
   </keyframe>
+  <extension>
+    <plugin plugin="mujoco.multiverse_connector">
+      <instance name="mujoco_client">
+        <config key="host" value="tcp://127.0.0.1" />
+        <config key="server_port" value="7000" />
+        <config key="client_port" value="7500" />
+        <config key="world_name" value="world" />
+        <config key="simulation_name" value="montessori_toys" />
+        <config key="send" value="{'body': ['position', 'quaternion'], 'joint': ['joint_rvalue', 'joint_tvalue', 'joint_linear_velocity', 'joint_angular_velocity', 'joint_force', 'joint_torque']}" />
+        <!-- <config key="receive" value="{'montessori_object_2_ref': ['position', 'quaternion'], 'montessori_object_3_ref': ['position', 'quaternion'], 'montessori_object_5_ref': ['position', 'quaternion'], 'montessori_object_6_ref': ['position', 'quaternion']}" /> -->
+      </instance>
+    </plugin>
+  </extension>
 </mujoco>
