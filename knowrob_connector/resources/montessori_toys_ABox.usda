@@ -1,0 +1,2050 @@
+#usda 1.0
+(
+    defaultPrim = "montessori_toys"
+    metersPerUnit = 1
+    subLayers = [
+        @./montessori_toys_TBox.usda@
+    ]
+    upAxis = "Z"
+)
+
+def Mujoco "mujoco" (
+    prepend apiSchemas = ["MujocoOptionAPI"]
+)
+{
+    string mujoco:model = "montessori_toys"
+    float mujoco:option:timestep = 0.002
+
+    def MujocoAsset "asset"
+    {
+        def MujocoMesh "meshes"
+        {
+            def MujocoMesh "montessori_box_MontessoriBox"
+            {
+                asset mujoco:mesh:file = @./montessori_toys/meshes/stl/montessori_box_MontessoriBox.stl@
+            }
+
+            def MujocoMesh "montessori_box_MontessoriDrawer"
+            {
+                asset mujoco:mesh:file = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawer.stl@
+            }
+
+            def MujocoMesh "montessori_box_MontessoriDrawerHandle"
+            {
+                asset mujoco:mesh:file = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawerHandle.stl@
+            }
+
+            def MujocoMesh "montessori_object_2_MontessoriObject_002"
+            {
+                asset mujoco:mesh:file = @./montessori_toys/meshes/stl/montessori_object_2_MontessoriObject_002.stl@
+            }
+        }
+
+        def MujocoMaterial "materials"
+        {
+        }
+
+        def MujocoTexture "textures"
+        {
+        }
+    }
+
+    def MujocoEquality "equality"
+    {
+    }
+}
+
+def Xform "montessori_toys"
+{
+    def Xform "table" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, -0.2)
+        float3 physics:diagonalInertia = (6.9266667, 6.5516667, 2.2516668)
+        float physics:mass = 10
+        quatf physics:principalAxes = (0, 0.70710677, 0, 0.70710677)
+        bool physics:rigidBodyEnabled = 1
+        float urdf:link:inertial:inertia:ixx = 6.9266667
+        float urdf:link:inertial:inertia:iyy = 6.5516667
+        float urdf:link:inertial:inertia:izz = 2.2516668
+        float urdf:link:inertial:mass = 10
+        float3 urdf:link:inertial:origin:rpy = (3.1415927, -1.5707964, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, -0.2)
+
+        def Cube "Geom_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (1, 0.5, 0.05)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0)
+            float3 urdf:geometry:box:size = (2, 1, 0.1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 0.5, 0, 0), (0, 0, 0.05, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "Geom_2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.95, 0.45, -0.5)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.05, 0.05, 0.5)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.95, 0.45, -0.5)
+            float3 urdf:geometry:box:size = (0.1, 0.1, 1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.05, 0, 0, 0), (0, 0.05, 0, 0), (0, 0, 0.5, 0), (0.95, 0.45, -0.5, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "Geom_3" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.95, 0.45, -0.5)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.05, 0.05, 0.5)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.95, 0.45, -0.5)
+            float3 urdf:geometry:box:size = (0.1, 0.1, 1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.05, 0, 0, 0), (0, 0.05, 0, 0), (0, 0, 0.5, 0), (-0.95, 0.45, -0.5, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "Geom_4" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.95, -0.45, -0.5)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.05, 0.05, 0.5)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.95, -0.45, -0.5)
+            float3 urdf:geometry:box:size = (0.1, 0.1, 1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.05, 0, 0, 0), (0, 0.05, 0, 0), (0, 0, 0.5, 0), (0.95, -0.45, -0.5, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "Geom_5" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.95, -0.45, -0.5)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.05, 0.05, 0.5)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.95, -0.45, -0.5)
+            float3 urdf:geometry:box:size = (0.1, 0.1, 1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.05, 0, 0, 0), (0, 0.05, 0, 0), (0, 0, 0.5, 0), (-0.95, -0.45, -0.5, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "small_table" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0.23)
+        float3 physics:diagonalInertia = (1.7316667, 1.5026667, 0.42766666)
+        float physics:mass = 10
+        quatf physics:principalAxes = (0.5, 0.5, -0.5, 0.5)
+        bool physics:rigidBodyEnabled = 1
+        float urdf:link:inertial:inertia:ixx = 1.7316667
+        float urdf:link:inertial:inertia:iyy = 1.5026667
+        float urdf:link:inertial:inertia:izz = 0.42766666
+        float urdf:link:inertial:mass = 10
+        float3 urdf:link:inertial:origin:rpy = (1.5707964, -1.5707964, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0.23)
+
+        def Cube "small_table_geom_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, 0.3)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.25, 0.5, 0.05)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0.3)
+            float3 urdf:geometry:box:size = (0.5, 1, 0.1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.25, 0, 0, 0), (0, 0.5, 0, 0), (0, 0, 0.05, 0), (0, 0, 0.3, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "small_table_geom_2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.225, 0.475, 0.125)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.025, 0.025, 0.125)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.225, 0.475, 0.125)
+            float3 urdf:geometry:box:size = (0.05, 0.05, 0.25)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.025, 0, 0, 0), (0, 0.025, 0, 0), (0, 0, 0.125, 0), (0.225, 0.475, 0.125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "small_table_geom_3" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.225, -0.475, 0.125)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.025, 0.025, 0.125)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.225, -0.475, 0.125)
+            float3 urdf:geometry:box:size = (0.05, 0.05, 0.25)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.025, 0, 0, 0), (0, 0.025, 0, 0), (0, 0, 0.125, 0), (0.225, -0.475, 0.125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "small_table_geom_4" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.225, 0.475, 0.125)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.025, 0.025, 0.125)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.225, 0.475, 0.125)
+            float3 urdf:geometry:box:size = (0.05, 0.05, 0.25)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.025, 0, 0, 0), (0, 0.025, 0, 0), (0, 0, 0.125, 0), (-0.225, 0.475, 0.125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "small_table_geom_5" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.225, -0.475, 0.125)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.025, 0.025, 0.125)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.225, -0.475, 0.125)
+            float3 urdf:geometry:box:size = (0.05, 0.05, 0.25)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.025, 0, 0, 0), (0, 0.025, 0, 0), (0, 0, 0.125, 0), (-0.225, -0.475, 0.125, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_box" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0.026772, 0.00018125, -0.00393274)
+        float3 physics:diagonalInertia = (0.00192842, 0.00624674, 0.00657549)
+        float physics:mass = 1.02204
+        quatf physics:principalAxes = (0.7081849, -0.0037527597, -0.0047669895, 0.7060009)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_Toy>
+        float urdf:link:inertial:inertia:ixx = 0.00192842
+        float urdf:link:inertial:inertia:iyy = 0.00624674
+        float urdf:link:inertial:inertia:izz = 0.00657549
+        float urdf:link:inertial:mass = 1.02204
+        float3 urdf:link:inertial:origin:rpy = (-0.012046598, -0.0014529169, 1.5677164)
+        point3f urdf:link:inertial:origin:xyz = (0.026772, 0.00018125, -0.00393274)
+
+        def Mesh "MontessoriBox" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+            prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriBox.usda@</montessori_box_MontessoriBox>
+        )
+        {
+            rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriBox>
+            point3f mujoco:geom:pos = (0.005257508, 0.000014678141, -0.00030882246)
+            quatf mujoco:geom:quat = (0.49638632, 0.4962184, -0.50386596, 0.50347495)
+            vector3f mujoco:geom:size = (1, 1, 1)
+            uniform token mujoco:geom:type = "mesh"
+            color3f[] primvars:displayColor = [(0.89, 0.67, 0.57)]
+            float[] primvars:displayOpacity = [1]
+            asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriBox.stl@
+            float3 urdf:geometry:mesh:scale = (1, 1, 1)
+            float3 urdf:visual:origin:rpy = (-1.5862145, -1.5560584, -3.1267333)
+            point3f urdf:visual:origin:xyz = (0.005257508, 0.000014678141, -0.00030882246)
+            matrix4d xformOp:transform = ( (-0.01473579620375487, -0.00021897924232272548, 0.9998913982820027, 0), (-0.9998912669834262, 0.0005605313669734269, -0.014735671510687165, 0), (-0.0005572436861241981, -0.9999998189263253, -0.00022721530804137302, 0), (0.005257507711314073, 0.00001467814150763251, -0.00030882245493819784, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_001" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0075, 0, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.008, 0.021, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0075, 0, 0.036)
+            float3 urdf:geometry:box:size = (0.016, 0.042, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.008, 0, 0, 0), (0, 0.021, 0, 0), (0, 0, 0.004, 0), (-0.0075, 0, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_002" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.04625, 0, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.00875, 0.141, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.04625, 0, 0.036)
+            float3 urdf:geometry:box:size = (0.0175, 0.282, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.00875, 0, 0, 0), (0, 0.141, 0, 0), (0, 0, 0.004, 0), (-0.04625, 0, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_003" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0.133, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.049, 0.004, 0.032)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0.133, 0)
+            float3 urdf:geometry:box:size = (0.098, 0.008, 0.064)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.049, 0, 0, 0), (0, 0.004, 0, 0), (0, 0, 0.032, 0), (0, 0.133, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_004" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, -0.133, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.049, 0.004, 0.032)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, -0.133, 0)
+            float3 urdf:geometry:box:size = (0.098, 0.008, 0.064)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.049, 0, 0, 0), (0, 0.004, 0, 0), (0, 0, 0.032, 0), (0, -0.133, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_005" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.045, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.001, 0.129, 0.032)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.045, 0, 0)
+            float3 urdf:geometry:box:size = (0.002, 0.258, 0.064)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.001, 0, 0, 0), (0, 0.129, 0, 0), (0, 0, 0.032, 0), (0.045, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_006" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0025, 0.0435, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0465, 0.0015, 0.032)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0025, 0.0435, 0)
+            float3 urdf:geometry:box:size = (0.093, 0.003, 0.064)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0465, 0, 0, 0), (0, 0.0015, 0, 0), (0, 0, 0.032, 0), (-0.0025, 0.0435, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_007" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0025, -0.0435, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0465, 0.0015, 0.032)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0025, -0.0435, 0)
+            float3 urdf:geometry:box:size = (0.093, 0.003, 0.064)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0465, 0, 0, 0), (0, 0.0015, 0, 0), (0, 0, 0.032, 0), (-0.0025, -0.0435, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_008" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, -0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.055, 0.141, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, -0.036)
+            float3 urdf:geometry:box:size = (0.11, 0.282, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.055, 0, 0, 0), (0, 0.141, 0, 0), (0, 0, 0.004, 0), (0, 0, -0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_009" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.04575, 0, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.00925, 0.141, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.04575, 0, 0.036)
+            float3 urdf:geometry:box:size = (0.0185, 0.282, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.00925, 0, 0, 0), (0, 0.141, 0, 0), (0, 0, 0.004, 0), (0.04575, 0, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_010" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0005, -0.122, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.037, 0.019, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0005, -0.122, 0.036)
+            float3 urdf:geometry:box:size = (0.074, 0.038, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.037, 0, 0, 0), (0, 0.019, 0, 0), (0, 0, 0.004, 0), (-0.0005, -0.122, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_011" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0005, -0.046, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.037, 0.025, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0005, -0.046, 0.036)
+            float3 urdf:geometry:box:size = (0.074, 0.05, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.037, 0, 0, 0), (0, 0.025, 0, 0), (0, 0, 0.004, 0), (-0.0005, -0.046, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_012" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0175, 0.046, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.02, 0.025, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0175, 0.046, 0.036)
+            float3 urdf:geometry:box:size = (0.04, 0.05, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.02, 0, 0, 0), (0, 0.025, 0, 0), (0, 0, 0.004, 0), (-0.0175, 0.046, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_013" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0175, 0.126, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.02, 0.015, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0175, 0.126, 0.036)
+            float3 urdf:geometry:box:size = (0.04, 0.03, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.02, 0, 0, 0), (0, 0.015, 0, 0), (0, 0, 0.004, 0), (-0.0175, 0.126, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_014" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.023937, 0.019593, 0.036)
+            quatf mujoco:geom:quat = (0.9659259, 0, 0, -0.25881895)
+            vector3f mujoco:geom:size = (0.021, 0.0105, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, -0.5235986)
+            point3f urdf:collision:origin:xyz = (0.023937, 0.019593, 0.036)
+            float3 urdf:geometry:box:size = (0.042, 0.021, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.018186535338505765, -0.010499996780060505, 0, 0), (0.0052499983900302525, 0.009093267669252883, 0, 0), (0, 0, 0.004, 0), (0.023937, 0.019593, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_015" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0005, -0.087, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.005, 0.016, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0005, -0.087, 0.036)
+            float3 urdf:geometry:box:size = (0.01, 0.032, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.005, 0, 0, 0), (0, 0.016, 0, 0), (0, 0, 0.004, 0), (-0.0005, -0.087, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_016" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.032, 0.081, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0045, 0.06, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.032, 0.081, 0.036)
+            float3 urdf:geometry:box:size = (0.009, 0.12, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0045, 0, 0, 0), (0, 0.06, 0, 0), (0, 0, 0.004, 0), (0.032, 0.081, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_017" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.025, 0.044, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0025, 0.023, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.025, 0.044, 0.036)
+            float3 urdf:geometry:box:size = (0.005, 0.046, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0025, 0, 0, 0), (0, 0.023, 0, 0), (0, 0, 0.004, 0), (0.025, 0.044, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_018" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.025, 0.128, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0025, 0.013, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.025, 0.128, 0.036)
+            float3 urdf:geometry:box:size = (0.005, 0.026, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0025, 0, 0, 0), (0, 0.013, 0, 0), (0, 0, 0.004, 0), (0.025, 0.128, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_019" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.0025, 0.071, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0082845, 0.0082845, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (0.0025, 0.071, 0.036)
+            float3 urdf:geometry:box:size = (0.016569, 0.016569, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.005858032904753383, 0.005858019352718686, 0, 0), (-0.005858019352718686, 0.005858032904753383, 0, 0), (0, 0, 0.004, 0), (0.0025, 0.071, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_020" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.0125, 0.081, 0.036)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.01, 0.06, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.0125, 0.081, 0.036)
+            float3 urdf:geometry:box:size = (0.02, 0.12, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.01, 0, 0, 0), (0, 0.06, 0, 0), (0, 0, 0.004, 0), (0.0125, 0.081, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_021" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0375, 0.071, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0082845, 0.0082845, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (-0.0375, 0.071, 0.036)
+            float3 urdf:geometry:box:size = (0.016569, 0.016569, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.005858032904753383, 0.005858019352718686, 0, 0), (-0.005858019352718686, 0.005858032904753383, 0, 0), (0, 0, 0.004, 0), (-0.0375, 0.071, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_022" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0375, 0.111, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0082845, 0.0082845, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (-0.0375, 0.111, 0.036)
+            float3 urdf:geometry:box:size = (0.016569, 0.016569, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.005858032904753383, 0.005858019352718686, 0, 0), (-0.005858019352718686, 0.005858032904753383, 0, 0), (0, 0, 0.004, 0), (-0.0375, 0.111, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_023" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.0025, 0.111, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0082845, 0.0082845, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (0.0025, 0.111, 0.036)
+            float3 urdf:geometry:box:size = (0.016569, 0.016569, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.005858032904753383, 0.005858019352718686, 0, 0), (-0.005858019352718686, 0.005858032904753383, 0, 0), (0, 0, 0.004, 0), (0.0025, 0.111, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_024" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.023937, -0.019593, 0.036)
+            quatf mujoco:geom:quat = (0.9659259, 0, 0, 0.25881895)
+            vector3f mujoco:geom:size = (0.021, 0.0105, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.5235986)
+            point3f urdf:collision:origin:xyz = (0.023937, -0.019593, 0.036)
+            float3 urdf:geometry:box:size = (0.042, 0.021, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.018186535338505765, 0.010499996780060505, 0, 0), (-0.0052499983900302525, 0.009093267669252883, 0, 0), (0, 0, 0.004, 0), (0.023937, -0.019593, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_025" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0375, -0.071, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0066275, 0.0066275, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (-0.0375, -0.071, 0.036)
+            float3 urdf:geometry:box:size = (0.013255, 0.013255, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004686355613042796, 0.004686344771578621, 0, 0), (-0.004686344771578621, 0.004686355613042796, 0, 0), (0, 0, 0.004, 0), (-0.0375, -0.071, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_026" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0055, -0.071, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0066275, 0.0066275, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (-0.0055, -0.071, 0.036)
+            float3 urdf:geometry:box:size = (0.013255, 0.013255, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004686355613042796, 0.004686344771578621, 0, 0), (-0.004686344771578621, 0.004686355613042796, 0, 0), (0, 0, 0.004, 0), (-0.0055, -0.071, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_027" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0055, -0.103, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0066275, 0.0066275, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (-0.0055, -0.103, 0.036)
+            float3 urdf:geometry:box:size = (0.013255, 0.013255, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004686355613042796, 0.004686344771578621, 0, 0), (-0.004686344771578621, 0.004686355613042796, 0, 0), (0, 0, 0.004, 0), (-0.0055, -0.103, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriBox_028" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.0375, -0.103, 0.036)
+            quatf mujoco:geom:quat = (0.92387974, 0, 0, 0.3826829)
+            vector3f mujoco:geom:size = (0.0066275, 0.0066275, 0.004)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0.785397)
+            point3f urdf:collision:origin:xyz = (-0.0375, -0.103, 0.036)
+            float3 urdf:geometry:box:size = (0.013255, 0.013255, 0.008)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004686355613042796, 0.004686344771578621, 0, 0), (-0.004686344771578621, 0.004686355613042796, 0, 0), (0, 0, 0.004, 0), (-0.0375, -0.103, 0.036, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def PhysicsPrismaticJoint "montessori_drawer_1_joint" (
+            prepend apiSchemas = ["MujocoJointAPI", "UrdfJointAPI"]
+        )
+        {
+            vector3f mujoco:joint:axis = (-1, 0, 0)
+            point3f mujoco:joint:pos = (0, 0, 0)
+            float2 mujoco:joint:range = (0, 0.1)
+            uniform token mujoco:joint:type = "slide"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </montessori_toys/montessori_box>
+            rel physics:body1 = </montessori_toys/montessori_drawer_1>
+            bool physics:collisionEnabled = 0
+            point3f physics:localPos0 = (-0.003, 0.087, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.7071068, 0, -0.7071068, 0)
+            quatf physics:localRot1 = (0.7071068, 0, -0.7071068, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.1
+            vector3f urdf:joint:axis = (-1, 0, 0)
+            prepend rel urdf:joint:child = </montessori_toys/montessori_drawer_1>
+            float urdf:joint:limit:effort = 1000
+            float urdf:joint:limit:lower = 0
+            float urdf:joint:limit:upper = 0.1
+            float urdf:joint:limit:velocity = 1000
+            float3 urdf:joint:origin:rpy = (0, 0, 0)
+            point3f urdf:joint:origin:xyz = (-0.003, 0.087, 0)
+            prepend rel urdf:joint:parent = </montessori_toys/montessori_box>
+            uniform token urdf:joint:type = "prismatic"
+        }
+
+        def PhysicsPrismaticJoint "montessori_drawer_2_joint" (
+            prepend apiSchemas = ["MujocoJointAPI", "UrdfJointAPI"]
+        )
+        {
+            vector3f mujoco:joint:axis = (-1, 0, 0)
+            point3f mujoco:joint:pos = (0, 0, 0)
+            float2 mujoco:joint:range = (0, 0.1)
+            uniform token mujoco:joint:type = "slide"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </montessori_toys/montessori_box>
+            rel physics:body1 = </montessori_toys/montessori_drawer_2>
+            bool physics:collisionEnabled = 0
+            point3f physics:localPos0 = (-0.003, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.7071068, 0, -0.7071068, 0)
+            quatf physics:localRot1 = (0.7071068, 0, -0.7071068, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.1
+            vector3f urdf:joint:axis = (-1, 0, 0)
+            prepend rel urdf:joint:child = </montessori_toys/montessori_drawer_2>
+            float urdf:joint:limit:effort = 1000
+            float urdf:joint:limit:lower = 0
+            float urdf:joint:limit:upper = 0.1
+            float urdf:joint:limit:velocity = 1000
+            float3 urdf:joint:origin:rpy = (0, 0, 0)
+            point3f urdf:joint:origin:xyz = (-0.003, 0, 0)
+            prepend rel urdf:joint:parent = </montessori_toys/montessori_box>
+            uniform token urdf:joint:type = "prismatic"
+        }
+
+        def PhysicsPrismaticJoint "montessori_drawer_3_joint" (
+            prepend apiSchemas = ["MujocoJointAPI", "UrdfJointAPI"]
+        )
+        {
+            vector3f mujoco:joint:axis = (-1, 0, 0)
+            point3f mujoco:joint:pos = (0, 0, 0)
+            float2 mujoco:joint:range = (0, 0.1)
+            uniform token mujoco:joint:type = "slide"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </montessori_toys/montessori_box>
+            rel physics:body1 = </montessori_toys/montessori_drawer_3>
+            bool physics:collisionEnabled = 0
+            point3f physics:localPos0 = (-0.003, -0.087, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.7071068, 0, -0.7071068, 0)
+            quatf physics:localRot1 = (0.7071068, 0, -0.7071068, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.1
+            vector3f urdf:joint:axis = (-1, 0, 0)
+            prepend rel urdf:joint:child = </montessori_toys/montessori_drawer_3>
+            float urdf:joint:limit:effort = 1000
+            float urdf:joint:limit:lower = 0
+            float urdf:joint:limit:upper = 0.1
+            float urdf:joint:limit:velocity = 1000
+            float3 urdf:joint:origin:rpy = (0, 0, 0)
+            point3f urdf:joint:origin:xyz = (-0.003, -0.087, 0)
+            prepend rel urdf:joint:parent = </montessori_toys/montessori_box>
+            uniform token urdf:joint:type = "prismatic"
+        }
+    }
+
+    def Xform "montessori_drawer_1" (
+        prepend apiSchemas = ["MujocoBodyAPI", "PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f mujoco:body:pos = (-0.003, 0.087, 0)
+        quatf mujoco:body:quat = (1, 0, 0, 0)
+        point3f physics:centerOfMass = (0.0257486, 5.70399e-8, -0.00258182)
+        float3 physics:diagonalInertia = (0.000164339, 0.000202005, 0.000267194)
+        float physics:mass = 0.132188
+        quatf physics:principalAxes = (0.9998726, -8.210307e-9, 0.015958594, -1.6337394e-8)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_YellowDrawer>
+        float urdf:link:inertial:inertia:ixx = 0.000164339
+        float urdf:link:inertial:inertia:iyy = 0.000202005
+        float urdf:link:inertial:inertia:izz = 0.000267194
+        float urdf:link:inertial:mass = 0.132188
+        float3 urdf:link:inertial:origin:rpy = (-1.69486e-8, 0.031918544, -3.2949462e-8)
+        point3f urdf:link:inertial:origin:xyz = (0.0257486, 5.70399e-8, -0.00258182)
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.003, 0.087, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+
+        def Mesh "MontessoriDrawer1" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+            prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriDrawer.usda@</montessori_box_MontessoriDrawer>
+        )
+        {
+            rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriDrawer>
+            point3f mujoco:geom:pos = (0.00039275453, -5.131831e-10, -0.004749107)
+            quatf mujoco:geom:quat = (0, 0.70671564, 0, 0.7074977)
+            vector3f mujoco:geom:size = (1, 1, 1)
+            uniform token mujoco:geom:type = "mesh"
+            color3f[] primvars:displayColor = [(1, 0.83, 0.67)]
+            float[] primvars:displayOpacity = [1]
+            asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawer.stl@
+            float3 urdf:geometry:mesh:scale = (1, 1, 1)
+            float3 urdf:visual:origin:rpy = (0, -1.5696902, 3.1415927)
+            point3f urdf:visual:origin:xyz = (0.00039275453, -5.131831e-10, -0.004749107)
+            matrix4d xformOp:transform = ( (-0.001106051420124432, 0, 0.9999993883249452, 0), (0, -1.0000000000000084, 0, 0), (0.9999993883249452, 0, 0.0011060514201159943, 0), (0.0003927545432970994, -5.131831144617359e-10, -0.004749107232882171, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer1_001" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, -0.03)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.046, 0.041, 0.001)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, -0.03)
+            float3 urdf:geometry:box:size = (0.092, 0.082, 0.002)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.046, 0, 0, 0), (0, 0.041, 0, 0), (0, 0, 0.001, 0), (0, 0, -0.03, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer1_002" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.042, 0, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.004, 0.041, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.042, 0, 0.001)
+            float3 urdf:geometry:box:size = (0.008, 0.082, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004, 0, 0, 0), (0, 0.041, 0, 0), (0, 0, 0.03, 0), (-0.042, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer1_003" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.004, 0.0385, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.042, 0.0025, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.004, 0.0385, 0.001)
+            float3 urdf:geometry:box:size = (0.084, 0.005, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.042, 0, 0, 0), (0, 0.0025, 0, 0), (0, 0, 0.03, 0), (0.004, 0.0385, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer1_004" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.004, -0.0385, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.042, 0.0025, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.004, -0.0385, 0.001)
+            float3 urdf:geometry:box:size = (0.084, 0.005, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.042, 0, 0, 0), (0, 0.0025, 0, 0), (0, 0, 0.03, 0), (0.004, -0.0385, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer1_005" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.0435, 0, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0025, 0.036, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.0435, 0, 0.001)
+            float3 urdf:geometry:box:size = (0.005, 0.072, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0025, 0, 0, 0), (0, 0.036, 0, 0), (0, 0, 0.03, 0), (0.0435, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "montessori_drawer_1_handle" (
+            prepend apiSchemas = ["MujocoBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+        )
+        {
+            point3f mujoco:body:pos = (-0.061, 0, 0.001)
+            quatf mujoco:body:quat = (1, 0, 0, 0)
+            point3f physics:centerOfMass = (0.00391558, 7.50302e-9, -7.7999e-11)
+            float3 physics:diagonalInertia = (2.26772e-7, 3.54304e-7, 3.54724e-7)
+            float physics:mass = 0.00573975
+            quatf physics:principalAxes = (0.70710677, -0.70710677, -4.6461685e-7, 4.8734387e-7)
+            prepend rel semanticTag:semanticLabels = </SOMA/_class_MontessoriBoxHandle>
+            float urdf:link:inertial:inertia:ixx = 2.26772e-7
+            float urdf:link:inertial:inertia:iyy = 3.54304e-7
+            float urdf:link:inertial:inertia:izz = 3.54724e-7
+            float urdf:link:inertial:mass = 0.00573975
+            float3 urdf:link:inertial:origin:rpy = (-1.5707964, 3.2140864e-8, 0.0000013462758)
+            point3f urdf:link:inertial:origin:xyz = (0.00391558, 7.50302e-9, -7.7999e-11)
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.061, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+
+            def Mesh "MontessoriDrawer1Handle" (
+                prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+                prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriDrawerHandle.usda@</montessori_box_MontessoriDrawerHandle>
+            )
+            {
+                rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriDrawerHandle>
+                point3f mujoco:geom:pos = (0.0039155805, 7.5257525e-9, -2.2858904e-11)
+                quatf mujoco:geom:quat = (0.5, 0.5, 0.5, 0.5)
+                vector3f mujoco:geom:size = (1, 1, 1)
+                uniform token mujoco:geom:type = "mesh"
+                color3f[] primvars:displayColor = [(0.89, 0.67, 0.57)]
+                float[] primvars:displayOpacity = [1]
+                asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawerHandle.stl@
+                float3 urdf:geometry:mesh:scale = (1, 1, 1)
+                float3 urdf:visual:origin:rpy = (1.5707964, -1.3322676e-15, 1.5707964)
+                point3f urdf:visual:origin:xyz = (0.0039155805, 7.5257525e-9, -2.2858904e-11)
+                matrix4d xformOp:transform = ( (-2.6645352591003757e-15, 1.0000000000000027, 0, 0), (0, -2.6645352591003757e-15, 1.0000000000000027, 0), (1.0000000000000027, 0, -2.6645352591003757e-15, 0), (0.003915580593123038, 7.52575280072505e-9, -2.285890351346911e-11, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+
+            def Cylinder "UCX_MontessoriDrawer1Handle_001" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryCylinderAPI"]
+            )
+            {
+                float3[] extent = [(-0.008, -0.008, -0.0075), (0.008, 0.008, 0.0075)]
+                double height = 0.015
+                point3f mujoco:geom:pos = (0.0075, 0, 0)
+                quatf mujoco:geom:quat = (0.70710677, 0, 0.70710677, 0)
+                vector3f mujoco:geom:size = (0.008, 0.0075, 0)
+                uniform token mujoco:geom:type = "cylinder"
+                bool physics:collisionEnabled = 1
+                color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+                float[] primvars:displayOpacity = [1]
+                double radius = 0.008
+                float3 urdf:collision:origin:rpy = (-0, 1.5707964, 0)
+                point3f urdf:collision:origin:xyz = (0.0075, 0, 0)
+                float urdf:geometry:cylinder:length = 0.015
+                float urdf:geometry:cylinder:radius = 0.008
+                token visibility = "inherited"
+                matrix4d xformOp:transform = ( (2.220446049250313e-16, 0, -0.9999999999999998, 0), (0, 1, 0, 0), (0.9999999999999998, 0, 2.220446049250313e-16, 0), (0.0075, 0, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+
+            def Sphere "UCX_MontessoriDrawer1Handle_002" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometrySphereAPI"]
+            )
+            {
+                float3[] extent = [(-0.005, -0.005, -0.005), (0.005, 0.005, 0.005)]
+                point3f mujoco:geom:pos = (0, 0, 0)
+                quatf mujoco:geom:quat = (1, 0, 0, 0)
+                vector3f mujoco:geom:size = (0.005, 0.011, 0.011)
+                uniform token mujoco:geom:type = "ellipsoid"
+                bool physics:collisionEnabled = 1
+                color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+                float[] primvars:displayOpacity = [1]
+                double radius = 0.005
+                float3 urdf:collision:origin:rpy = (0, 0, 0)
+                point3f urdf:collision:origin:xyz = (0, 0, 0)
+                float urdf:geometry:sphere:radius = 0.005
+                token visibility = "inherited"
+                matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+        }
+    }
+
+    def Xform "montessori_drawer_2" (
+        prepend apiSchemas = ["MujocoBodyAPI", "PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f mujoco:body:pos = (-0.003, 0, 0)
+        quatf mujoco:body:quat = (1, 0, 0, 0)
+        point3f physics:centerOfMass = (0.0257486, 5.70399e-8, -0.00258182)
+        float3 physics:diagonalInertia = (0.000164339, 0.000202005, 0.000267194)
+        float physics:mass = 0.132188
+        quatf physics:principalAxes = (0.9998726, -8.210307e-9, 0.015958594, -1.6337394e-8)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_OrangeDrawer>
+        float urdf:link:inertial:inertia:ixx = 0.000164339
+        float urdf:link:inertial:inertia:iyy = 0.000202005
+        float urdf:link:inertial:inertia:izz = 0.000267194
+        float urdf:link:inertial:mass = 0.132188
+        float3 urdf:link:inertial:origin:rpy = (-1.69486e-8, 0.031918544, -3.2949462e-8)
+        point3f urdf:link:inertial:origin:xyz = (0.0257486, 5.70399e-8, -0.00258182)
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.003, 0, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+
+        def Mesh "MontessoriDrawer2" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+            prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriDrawer.usda@</montessori_box_MontessoriDrawer>
+        )
+        {
+            rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriDrawer>
+            point3f mujoco:geom:pos = (0.00039275453, -5.131831e-10, -0.004749107)
+            quatf mujoco:geom:quat = (0, 0.70671564, 0, 0.7074977)
+            vector3f mujoco:geom:size = (1, 1, 1)
+            uniform token mujoco:geom:type = "mesh"
+            color3f[] primvars:displayColor = [(0.99, 0.73, 0.55)]
+            float[] primvars:displayOpacity = [1]
+            asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawer.stl@
+            float3 urdf:geometry:mesh:scale = (1, 1, 1)
+            float3 urdf:visual:origin:rpy = (0, -1.5696902, 3.1415927)
+            point3f urdf:visual:origin:xyz = (0.00039275453, -5.131831e-10, -0.004749107)
+            matrix4d xformOp:transform = ( (-0.001106051420124432, 0, 0.9999993883249452, 0), (0, -1.0000000000000084, 0, 0), (0.9999993883249452, 0, 0.0011060514201159943, 0), (0.0003927545432970994, -5.131831144617359e-10, -0.004749107232882171, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer2_001" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, -0.03)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.046, 0.041, 0.001)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, -0.03)
+            float3 urdf:geometry:box:size = (0.092, 0.082, 0.002)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.046, 0, 0, 0), (0, 0.041, 0, 0), (0, 0, 0.001, 0), (0, 0, -0.03, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer2_002" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.042, 0, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.004, 0.041, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.042, 0, 0.001)
+            float3 urdf:geometry:box:size = (0.008, 0.082, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004, 0, 0, 0), (0, 0.041, 0, 0), (0, 0, 0.03, 0), (-0.042, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer2_003" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.004, 0.0385, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.042, 0.0025, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.004, 0.0385, 0.001)
+            float3 urdf:geometry:box:size = (0.084, 0.005, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.042, 0, 0, 0), (0, 0.0025, 0, 0), (0, 0, 0.03, 0), (0.004, 0.0385, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer2_004" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.004, -0.0385, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.042, 0.0025, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.004, -0.0385, 0.001)
+            float3 urdf:geometry:box:size = (0.084, 0.005, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.042, 0, 0, 0), (0, 0.0025, 0, 0), (0, 0, 0.03, 0), (0.004, -0.0385, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer2_005" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.0435, 0, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0025, 0.036, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.0435, 0, 0.001)
+            float3 urdf:geometry:box:size = (0.005, 0.072, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0025, 0, 0, 0), (0, 0.036, 0, 0), (0, 0, 0.03, 0), (0.0435, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "montessori_drawer_2_handle" (
+            prepend apiSchemas = ["MujocoBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+        )
+        {
+            point3f mujoco:body:pos = (-0.061, 0, 0.001)
+            quatf mujoco:body:quat = (1, 0, 0, 0)
+            point3f physics:centerOfMass = (0.00391558, 7.50302e-9, -7.7999e-11)
+            float3 physics:diagonalInertia = (2.26772e-7, 3.54304e-7, 3.54724e-7)
+            float physics:mass = 0.00573975
+            quatf physics:principalAxes = (0.70710677, -0.70710677, -4.6461685e-7, 4.8734387e-7)
+            prepend rel semanticTag:semanticLabels = </SOMA/_class_MontessoriBoxHandle>
+            float urdf:link:inertial:inertia:ixx = 2.26772e-7
+            float urdf:link:inertial:inertia:iyy = 3.54304e-7
+            float urdf:link:inertial:inertia:izz = 3.54724e-7
+            float urdf:link:inertial:mass = 0.00573975
+            float3 urdf:link:inertial:origin:rpy = (-1.5707964, 3.2140864e-8, 0.0000013462758)
+            point3f urdf:link:inertial:origin:xyz = (0.00391558, 7.50302e-9, -7.7999e-11)
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.061, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+
+            def Mesh "MontessoriDrawer2Handle" (
+                prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+                prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriDrawerHandle.usda@</montessori_box_MontessoriDrawerHandle>
+            )
+            {
+                rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriDrawerHandle>
+                point3f mujoco:geom:pos = (0.0039155805, 7.5257525e-9, -2.2858904e-11)
+                quatf mujoco:geom:quat = (0.5, 0.5, 0.5, 0.5)
+                vector3f mujoco:geom:size = (1, 1, 1)
+                uniform token mujoco:geom:type = "mesh"
+                color3f[] primvars:displayColor = [(0.89, 0.67, 0.57)]
+                float[] primvars:displayOpacity = [1]
+                asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawerHandle.stl@
+                float3 urdf:geometry:mesh:scale = (1, 1, 1)
+                float3 urdf:visual:origin:rpy = (1.5707964, -1.3322676e-15, 1.5707964)
+                point3f urdf:visual:origin:xyz = (0.0039155805, 7.5257525e-9, -2.2858904e-11)
+                matrix4d xformOp:transform = ( (-2.6645352591003757e-15, 1.0000000000000027, 0, 0), (0, -2.6645352591003757e-15, 1.0000000000000027, 0), (1.0000000000000027, 0, -2.6645352591003757e-15, 0), (0.003915580593123038, 7.52575280072505e-9, -2.285890351346911e-11, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+
+            def Cylinder "UCX_MontessoriDrawer2Handle_001" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryCylinderAPI"]
+            )
+            {
+                float3[] extent = [(-0.008, -0.008, -0.0075), (0.008, 0.008, 0.0075)]
+                double height = 0.015
+                point3f mujoco:geom:pos = (0.0075, 0, 0)
+                quatf mujoco:geom:quat = (0.70710677, 0, 0.70710677, 0)
+                vector3f mujoco:geom:size = (0.008, 0.0075, 0)
+                uniform token mujoco:geom:type = "cylinder"
+                bool physics:collisionEnabled = 1
+                color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+                float[] primvars:displayOpacity = [1]
+                double radius = 0.008
+                float3 urdf:collision:origin:rpy = (-0, 1.5707964, 0)
+                point3f urdf:collision:origin:xyz = (0.0075, 0, 0)
+                float urdf:geometry:cylinder:length = 0.015
+                float urdf:geometry:cylinder:radius = 0.008
+                token visibility = "inherited"
+                matrix4d xformOp:transform = ( (2.220446049250313e-16, 0, -0.9999999999999998, 0), (0, 1, 0, 0), (0.9999999999999998, 0, 2.220446049250313e-16, 0), (0.0075, 0, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+
+            def Sphere "UCX_MontessoriDrawer2Handle_002" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometrySphereAPI"]
+            )
+            {
+                float3[] extent = [(-0.005, -0.005, -0.005), (0.005, 0.005, 0.005)]
+                point3f mujoco:geom:pos = (0, 0, 0)
+                quatf mujoco:geom:quat = (1, 0, 0, 0)
+                vector3f mujoco:geom:size = (0.005, 0.011, 0.011)
+                uniform token mujoco:geom:type = "ellipsoid"
+                bool physics:collisionEnabled = 1
+                color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+                float[] primvars:displayOpacity = [1]
+                double radius = 0.005
+                float3 urdf:collision:origin:rpy = (0, 0, 0)
+                point3f urdf:collision:origin:xyz = (0, 0, 0)
+                float urdf:geometry:sphere:radius = 0.005
+                token visibility = "inherited"
+                matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+        }
+    }
+
+    def Xform "montessori_drawer_3" (
+        prepend apiSchemas = ["MujocoBodyAPI", "PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f mujoco:body:pos = (-0.003, -0.087, 0)
+        quatf mujoco:body:quat = (1, 0, 0, 0)
+        point3f physics:centerOfMass = (0.0257486, 5.70399e-8, -0.00258182)
+        float3 physics:diagonalInertia = (0.000164339, 0.000202005, 0.000267194)
+        float physics:mass = 0.132188
+        quatf physics:principalAxes = (0.9998726, -8.210307e-9, 0.015958594, -1.6337394e-8)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_BlueDrawer>
+        float urdf:link:inertial:inertia:ixx = 0.000164339
+        float urdf:link:inertial:inertia:iyy = 0.000202005
+        float urdf:link:inertial:inertia:izz = 0.000267194
+        float urdf:link:inertial:mass = 0.132188
+        float3 urdf:link:inertial:origin:rpy = (-1.69486e-8, 0.031918544, -3.2949462e-8)
+        point3f urdf:link:inertial:origin:xyz = (0.0257486, 5.70399e-8, -0.00258182)
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.003, -0.087, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+
+        def Mesh "MontessoriDrawer3" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+            prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriDrawer.usda@</montessori_box_MontessoriDrawer>
+        )
+        {
+            rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriDrawer>
+            point3f mujoco:geom:pos = (0.00039275453, -5.131831e-10, -0.004749107)
+            quatf mujoco:geom:quat = (0, 0.70671564, 0, 0.7074977)
+            vector3f mujoco:geom:size = (1, 1, 1)
+            uniform token mujoco:geom:type = "mesh"
+            color3f[] primvars:displayColor = [(0.87, 0.94, 0.98)]
+            float[] primvars:displayOpacity = [1]
+            asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawer.stl@
+            float3 urdf:geometry:mesh:scale = (1, 1, 1)
+            float3 urdf:visual:origin:rpy = (0, -1.5696902, 3.1415927)
+            point3f urdf:visual:origin:xyz = (0.00039275453, -5.131831e-10, -0.004749107)
+            matrix4d xformOp:transform = ( (-0.001106051420124432, 0, 0.9999993883249452, 0), (0, -1.0000000000000084, 0, 0), (0.9999993883249452, 0, 0.0011060514201159943, 0), (0.0003927545432970994, -5.131831144617359e-10, -0.004749107232882171, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer3_001" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, -0.03)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.046, 0.041, 0.001)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, -0.03)
+            float3 urdf:geometry:box:size = (0.092, 0.082, 0.002)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.046, 0, 0, 0), (0, 0.041, 0, 0), (0, 0, 0.001, 0), (0, 0, -0.03, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer3_002" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (-0.042, 0, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.004, 0.041, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.042, 0, 0.001)
+            float3 urdf:geometry:box:size = (0.008, 0.082, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.004, 0, 0, 0), (0, 0.041, 0, 0), (0, 0, 0.03, 0), (-0.042, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer3_003" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.004, 0.0385, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.042, 0.0025, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.004, 0.0385, 0.001)
+            float3 urdf:geometry:box:size = (0.084, 0.005, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.042, 0, 0, 0), (0, 0.0025, 0, 0), (0, 0, 0.03, 0), (0.004, 0.0385, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer3_004" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.004, -0.0385, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.042, 0.0025, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.004, -0.0385, 0.001)
+            float3 urdf:geometry:box:size = (0.084, 0.005, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.042, 0, 0, 0), (0, 0.0025, 0, 0), (0, 0, 0.03, 0), (0.004, -0.0385, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Cube "UCX_MontessoriDrawer3_005" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0.0435, 0, 0.001)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.0025, 0.036, 0.03)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0.0435, 0, 0.001)
+            float3 urdf:geometry:box:size = (0.005, 0.072, 0.06)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.0025, 0, 0, 0), (0, 0.036, 0, 0), (0, 0, 0.03, 0), (0.0435, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "montessori_drawer_3_handle" (
+            prepend apiSchemas = ["MujocoBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+        )
+        {
+            point3f mujoco:body:pos = (-0.061, 0, 0.001)
+            quatf mujoco:body:quat = (1, 0, 0, 0)
+            point3f physics:centerOfMass = (0.00391558, 7.50302e-9, -7.7999e-11)
+            float3 physics:diagonalInertia = (2.26772e-7, 3.54304e-7, 3.54724e-7)
+            float physics:mass = 0.00573975
+            quatf physics:principalAxes = (0.70710677, -0.70710677, -4.6461685e-7, 4.8734387e-7)
+            prepend rel semanticTag:semanticLabels = </SOMA/_class_MontessoriBoxHandle>
+            float urdf:link:inertial:inertia:ixx = 2.26772e-7
+            float urdf:link:inertial:inertia:iyy = 3.54304e-7
+            float urdf:link:inertial:inertia:izz = 3.54724e-7
+            float urdf:link:inertial:mass = 0.00573975
+            float3 urdf:link:inertial:origin:rpy = (-1.5707964, 3.2140864e-8, 0.0000013462758)
+            point3f urdf:link:inertial:origin:xyz = (0.00391558, 7.50302e-9, -7.7999e-11)
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.061, 0, 0.001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+
+            def Mesh "MontessoriDrawer3Handle" (
+                prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+                prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_box_MontessoriDrawerHandle.usda@</montessori_box_MontessoriDrawerHandle>
+            )
+            {
+                rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_box_MontessoriDrawerHandle>
+                point3f mujoco:geom:pos = (0.0039155805, 7.5257525e-9, -2.2858904e-11)
+                quatf mujoco:geom:quat = (0.5, 0.5, 0.5, 0.5)
+                vector3f mujoco:geom:size = (1, 1, 1)
+                uniform token mujoco:geom:type = "mesh"
+                color3f[] primvars:displayColor = [(0.89, 0.67, 0.57)]
+                float[] primvars:displayOpacity = [1]
+                asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_box_MontessoriDrawerHandle.stl@
+                float3 urdf:geometry:mesh:scale = (1, 1, 1)
+                float3 urdf:visual:origin:rpy = (1.5707964, -1.3322676e-15, 1.5707964)
+                point3f urdf:visual:origin:xyz = (0.0039155805, 7.5257525e-9, -2.2858904e-11)
+                matrix4d xformOp:transform = ( (-2.6645352591003757e-15, 1.0000000000000027, 0, 0), (0, -2.6645352591003757e-15, 1.0000000000000027, 0), (1.0000000000000027, 0, -2.6645352591003757e-15, 0), (0.003915580593123038, 7.52575280072505e-9, -2.285890351346911e-11, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+
+            def Cylinder "UCX_MontessoriDrawer3Handle_001" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryCylinderAPI"]
+            )
+            {
+                float3[] extent = [(-0.008, -0.008, -0.0075), (0.008, 0.008, 0.0075)]
+                double height = 0.015
+                point3f mujoco:geom:pos = (0.0075, 0, 0)
+                quatf mujoco:geom:quat = (0.70710677, 0, 0.70710677, 0)
+                vector3f mujoco:geom:size = (0.008, 0.0075, 0)
+                uniform token mujoco:geom:type = "cylinder"
+                bool physics:collisionEnabled = 1
+                color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+                float[] primvars:displayOpacity = [1]
+                double radius = 0.008
+                float3 urdf:collision:origin:rpy = (-0, 1.5707964, 0)
+                point3f urdf:collision:origin:xyz = (0.0075, 0, 0)
+                float urdf:geometry:cylinder:length = 0.015
+                float urdf:geometry:cylinder:radius = 0.008
+                token visibility = "inherited"
+                matrix4d xformOp:transform = ( (2.220446049250313e-16, 0, -0.9999999999999998, 0), (0, 1, 0, 0), (0.9999999999999998, 0, 2.220446049250313e-16, 0), (0.0075, 0, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+
+            def Sphere "UCX_MontessoriDrawer3Handle_002" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometrySphereAPI"]
+            )
+            {
+                float3[] extent = [(-0.005, -0.005, -0.005), (0.005, 0.005, 0.005)]
+                point3f mujoco:geom:pos = (0, 0, 0)
+                quatf mujoco:geom:quat = (1, 0, 0, 0)
+                vector3f mujoco:geom:size = (0.005, 0.011, 0.011)
+                uniform token mujoco:geom:type = "ellipsoid"
+                bool physics:collisionEnabled = 1
+                color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+                float[] primvars:displayOpacity = [1]
+                double radius = 0.005
+                float3 urdf:collision:origin:rpy = (0, 0, 0)
+                point3f urdf:collision:origin:xyz = (0, 0, 0)
+                float urdf:geometry:sphere:radius = 0.005
+                token visibility = "inherited"
+                matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform"]
+            }
+        }
+    }
+
+    def Xform "montessori_object_1" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (2.38973e-7, 2.38973e-7, 4.53745e-7)
+        float physics:mass = 0.00411518
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_YellowThinCylinder>
+        float urdf:link:inertial:inertia:ixx = 2.38973e-7
+        float urdf:link:inertial:inertia:iyy = 2.38973e-7
+        float urdf:link:inertial:inertia:izz = 4.53745e-7
+        float urdf:link:inertial:mass = 0.00411518
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cylinder "MontessoriObject1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryCylinderAPI"]
+        )
+        {
+            float3[] extent = [(-0.022, -0.022, -0.002), (0.022, 0.022, 0.002)]
+            double height = 0.004
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.022, 0.002, 0)
+            uniform token mujoco:geom:type = "cylinder"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(1, 0.83, 0.67)]
+            float[] primvars:displayOpacity = [1]
+            double radius = 0.022
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0)
+            float urdf:geometry:cylinder:length = 0.004
+            float urdf:geometry:cylinder:radius = 0.022
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_2" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00000125081, 0.00000125081, 8.33876e-7)
+        float physics:mass = 0.0113441
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_OrangeTriangle>
+        float urdf:link:inertial:inertia:ixx = 0.00000125081
+        float urdf:link:inertial:inertia:iyy = 0.00000125081
+        float urdf:link:inertial:inertia:izz = 8.33876e-7
+        float urdf:link:inertial:mass = 0.0113441
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Mesh "MontessoriObject2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryMeshAPI"]
+            prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_object_2_MontessoriObject_002.usda@</montessori_object_2_MontessoriObject_002>
+        )
+        {
+            rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_object_2_MontessoriObject_002>
+            point3f mujoco:geom:pos = (-0.0058199936, -2.7842137e-20, 3.7252903e-9)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (1, 1, 1)
+            uniform token mujoco:geom:type = "mesh"
+            uniform token physics:approximation = "convexHull"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.99, 0.73, 0.55)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (-0.0058199936, -2.7842137e-20, 3.7252903e-9)
+            asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_object_2_MontessoriObject_002.stl@
+            float3 urdf:geometry:mesh:scale = (1, 1, 1)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.005819993688621455, -2.784213738573783e-20, 3.725290298687784e-9, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_3" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (5.07195e-7, 5.07195e-7, 5.07195e-7)
+        float physics:mass = 0.00776239
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_BlueCuboid>
+        float urdf:link:inertial:inertia:ixx = 5.07195e-7
+        float urdf:link:inertial:inertia:iyy = 5.07195e-7
+        float urdf:link:inertial:inertia:izz = 5.07195e-7
+        float urdf:link:inertial:mass = 0.00776239
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cube "MontessoriObject3" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.015, 0.015, 0.015)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.87, 0.94, 0.98)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0)
+            float3 urdf:geometry:box:size = (0.03, 0.03, 0.03)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.015, 0, 0, 0), (0, 0.015, 0, 0), (0, 0, 0.015, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_4" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00000120999, 0.00000120999, 0.00000120999)
+        float physics:mass = 0.0137173
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_YellowBall>
+        float urdf:link:inertial:inertia:ixx = 0.00000120999
+        float urdf:link:inertial:inertia:iyy = 0.00000120999
+        float urdf:link:inertial:inertia:izz = 0.00000120999
+        float urdf:link:inertial:mass = 0.0137173
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Sphere "MontessoriObject4" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometrySphereAPI"]
+        )
+        {
+            float3[] extent = [(-0.02, -0.02, -0.02), (0.02, 0.02, 0.02)]
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.02, 0, 0)
+            uniform token mujoco:geom:type = "sphere"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(1, 0.83, 0.67)]
+            float[] primvars:displayOpacity = [1]
+            double radius = 0.02
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0)
+            float urdf:geometry:sphere:radius = 0.02
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_5" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00000128384, 7.13243e-7, 7.13243e-7)
+        float physics:mass = 0.00873269
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_OrangeCube>
+        float urdf:link:inertial:inertia:ixx = 0.00000128384
+        float urdf:link:inertial:inertia:iyy = 7.13243e-7
+        float urdf:link:inertial:inertia:izz = 7.13243e-7
+        float urdf:link:inertial:mass = 0.00873269
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cube "MontessoriObject5" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.01, 0.02, 0.015)
+            uniform token mujoco:geom:type = "box"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.99, 0.73, 0.55)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0)
+            float3 urdf:geometry:box:size = (0.02, 0.04, 0.03)
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (0.01, 0, 0, 0), (0, 0.02, 0, 0), (0, 0, 0.015, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_6" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI", "SemanticTagAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (3.48556e-7, 3.48556e-7, 2.98762e-7)
+        float physics:mass = 0.00609657
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        prepend rel semanticTag:semanticLabels = </SOMA/_class_BlueHighCylinder>
+        float urdf:link:inertial:inertia:ixx = 3.48556e-7
+        float urdf:link:inertial:inertia:iyy = 3.48556e-7
+        float urdf:link:inertial:inertia:izz = 2.98762e-7
+        float urdf:link:inertial:mass = 0.00609657
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cylinder "MontessoriObject6" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MujocoGeomAPI", "UrdfLinkCollisionAPI", "UrdfGeometryCylinderAPI"]
+        )
+        {
+            float3[] extent = [(-0.015, -0.015, -0.015), (0.015, 0.015, 0.015)]
+            double height = 0.03
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.015, 0.015, 0)
+            uniform token mujoco:geom:type = "cylinder"
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(0.87, 0.94, 0.98)]
+            float[] primvars:displayOpacity = [1]
+            double radius = 0.015
+            float3 urdf:collision:origin:rpy = (0, 0, 0)
+            point3f urdf:collision:origin:xyz = (0, 0, 0)
+            float urdf:geometry:cylinder:length = 0.03
+            float urdf:geometry:cylinder:radius = 0.015
+            token visibility = "inherited"
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_2_ref" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (-0.0058199936, -2.7842137e-20, 3.7252903e-9)
+        float3 physics:diagonalInertia = (0.000003076216, 0.0000030461056, 0.000002921393)
+        float physics:mass = 0.021339536
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        float urdf:link:inertial:inertia:ixx = 0.000003076216
+        float urdf:link:inertial:inertia:iyy = 0.0000030461056
+        float urdf:link:inertial:inertia:izz = 0.000002921393
+        float urdf:link:inertial:mass = 0.021339536
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (-0.0058199936, -2.7842137e-20, 3.7252903e-9)
+
+        def Mesh "montessori_object_2_ref_MontessoriObject2" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryMeshAPI"]
+            prepend references = @/media/giangnguyen/Storage/Multiverse-Knowledge/knowrob_connector/resources/montessori_toys/meshes/usd/montessori_object_2_MontessoriObject_002.usda@</montessori_object_2_MontessoriObject_002>
+        )
+        {
+            rel mujoco:geom:mesh = </mujoco/asset/meshes/montessori_object_2_MontessoriObject_002>
+            point3f mujoco:geom:pos = (-0.0058199936, -2.7842137e-20, 3.7252903e-9)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (1, 1, 1)
+            uniform token mujoco:geom:type = "mesh"
+            color3f[] primvars:displayColor = [(0, 1, 0)]
+            float[] primvars:displayOpacity = [1]
+            asset urdf:geometry:mesh:filename = @./montessori_toys/meshes/stl/montessori_object_2_MontessoriObject_002.stl@
+            float3 urdf:geometry:mesh:scale = (1, 1, 1)
+            float3 urdf:visual:origin:rpy = (0, 0, 0)
+            point3f urdf:visual:origin:xyz = (-0.0058199936, -2.7842137e-20, 3.7252903e-9)
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-0.005819993688621455, -2.784213738573783e-20, 3.725290298687784e-9, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_3_ref" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00000405, 0.00000405, 0.00000405)
+        float physics:mass = 0.027
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        float urdf:link:inertial:inertia:ixx = 0.00000405
+        float urdf:link:inertial:inertia:iyy = 0.00000405
+        float urdf:link:inertial:inertia:izz = 0.00000405
+        float urdf:link:inertial:mass = 0.027
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cube "montessori_object_3_ref_MontessoriObject3" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.015, 0.015, 0.015)
+            uniform token mujoco:geom:type = "box"
+            color3f[] primvars:displayColor = [(0, 1, 0)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:geometry:box:size = (0.03, 0.03, 0.03)
+            float3 urdf:visual:origin:rpy = (0, 0, 0)
+            point3f urdf:visual:origin:xyz = (0, 0, 0)
+            matrix4d xformOp:transform = ( (0.015, 0, 0, 0), (0, 0.015, 0, 0), (0, 0, 0.015, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_5_ref" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.000005, 0.0000026, 0.000004)
+        float physics:mass = 0.024
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        float urdf:link:inertial:inertia:ixx = 0.000005
+        float urdf:link:inertial:inertia:iyy = 0.0000026
+        float urdf:link:inertial:inertia:izz = 0.000004
+        float urdf:link:inertial:mass = 0.024
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cube "montessori_object_5_ref_MontessoriObject5" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryBoxAPI"]
+        )
+        {
+            float3[] extent = [(-1, -1, -1), (1, 1, 1)]
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.01, 0.02, 0.015)
+            uniform token mujoco:geom:type = "box"
+            color3f[] primvars:displayColor = [(0, 1, 0)]
+            float[] primvars:displayOpacity = [1]
+            float3 urdf:geometry:box:size = (0.02, 0.04, 0.03)
+            float3 urdf:visual:origin:rpy = (0, 0, 0)
+            point3f urdf:visual:origin:xyz = (0, 0, 0)
+            matrix4d xformOp:transform = ( (0.01, 0, 0, 0), (0, 0.02, 0, 0), (0, 0, 0.015, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Xform "montessori_object_6_ref" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI", "UrdfLinkInertialAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.0000027832548, 0.0000027832548, 0.000002385647)
+        float physics:mass = 0.021205751
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        float urdf:link:inertial:inertia:ixx = 0.0000027832548
+        float urdf:link:inertial:inertia:iyy = 0.0000027832548
+        float urdf:link:inertial:inertia:izz = 0.000002385647
+        float urdf:link:inertial:mass = 0.021205751
+        float3 urdf:link:inertial:origin:rpy = (0, 0, 0)
+        point3f urdf:link:inertial:origin:xyz = (0, 0, 0)
+
+        def Cylinder "montessori_object_6_ref_MontessoriObject6" (
+            prepend apiSchemas = ["MujocoGeomAPI", "UrdfLinkVisualAPI", "UrdfGeometryCylinderAPI"]
+        )
+        {
+            float3[] extent = [(-0.015, -0.015, -0.015), (0.015, 0.015, 0.015)]
+            double height = 0.03
+            point3f mujoco:geom:pos = (0, 0, 0)
+            quatf mujoco:geom:quat = (1, 0, 0, 0)
+            vector3f mujoco:geom:size = (0.015, 0.015, 0)
+            uniform token mujoco:geom:type = "cylinder"
+            color3f[] primvars:displayColor = [(0, 1, 0)]
+            float[] primvars:displayOpacity = [1]
+            double radius = 0.015
+            float urdf:geometry:cylinder:length = 0.03
+            float urdf:geometry:cylinder:radius = 0.015
+            float3 urdf:visual:origin:rpy = (0, 0, 0)
+            point3f urdf:visual:origin:xyz = (0, 0, 0)
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+}
+
+def Urdf "urdf"
+{
+    string urdf:name = "montessori_toys"
+}
+

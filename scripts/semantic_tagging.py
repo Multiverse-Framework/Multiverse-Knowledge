@@ -86,7 +86,21 @@ sem_labels = {
     "SM_Kitchen_11_Base_Drawer_02": ["_class_Drawer"],
     "SM_Kitchen_11_Base_Drawer_03": ["_class_Drawer"],
 
-    "CT4_Fittings": ["_class_valve"]
+    "CT4_Fittings": ["_class_valve"],
+
+    "montessori_box": ["_class_Toy"],
+    "montessori_drawer_1": ["_class_YellowDrawer"],
+    "montessori_drawer_2": ["_class_OrangeDrawer"],
+    "montessori_drawer_3": ["_class_BlueDrawer"],
+    "montessori_drawer_1_handle": ["_class_MontessoriBoxHandle"],
+    "montessori_drawer_2_handle": ["_class_MontessoriBoxHandle"],
+    "montessori_drawer_3_handle": ["_class_MontessoriBoxHandle"],
+    "montessori_object_1": ["_class_YellowThinCylinder"],
+    "montessori_object_2": ["_class_OrangeTriangle"],
+    "montessori_object_3": ["_class_BlueCuboid"],
+    "montessori_object_4": ["_class_YellowBall"],
+    "montessori_object_5": ["_class_OrangeCube"],
+    "montessori_object_6": ["_class_BlueHighCylinder"],
 }
 
 sem_TBox = {}

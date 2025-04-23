@@ -51,10 +51,10 @@
     <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" />
     <texture type="2d" name="texplane" builtin="checker" mark="cross" rgb1="0.2 0.3 0.4" rgb2="0.1 0.15 0.2" markrgb="0.8 0.8 0.8" width="512" height="512" />
     <material name="matplane" texture="texplane" texuniform="true" texrepeat="10 10" reflectance="0.3" />
-    <mesh name="montessori_box_MontessoriBox" file="./meshes/MontessoriBox.stl" />
-    <mesh name="montessori_box_MontessoriDrawer" file="./meshes/MontessoriDrawer.stl" />
-    <mesh name="montessori_box_MontessoriDrawerHandle" file="./meshes/MontessoriDrawerHandle.stl" />
-    <mesh name="montessori_object_2_MontessoriObject_002" file="./meshes/MontessoriObject_002.stl" />
+    <mesh name="montessori_box_MontessoriBox" file="./montessori_toys/meshes/stl/MontessoriBox.stl" />
+    <mesh name="montessori_box_MontessoriDrawer" file="./montessori_toys/meshes/stl/MontessoriDrawer.stl" />
+    <mesh name="montessori_box_MontessoriDrawerHandle" file="./montessori_toys/meshes/stl/MontessoriDrawerHandle.stl" />
+    <mesh name="montessori_object_2_MontessoriObject_002" file="./montessori_toys/meshes/stl/MontessoriObject_002.stl" />
   </asset>
   <worldbody>
     <geom name="ground" size="0 0 1" type="plane" condim="1" material="matplane" />
@@ -206,17 +206,4 @@
   <keyframe>
     <key name="home" />
   </keyframe>
-  <extension>
-    <plugin plugin="mujoco.multiverse_connector">
-      <instance name="mujoco_client">
-        <config key="host" value="tcp://127.0.0.1" />
-        <config key="server_port" value="7000" />
-        <config key="client_port" value="7500" />
-        <config key="world_name" value="world" />
-        <config key="simulation_name" value="montessori_toys" />
-        <config key="send" value="{'body': ['position', 'quaternion'], 'joint': ['joint_rvalue', 'joint_tvalue', 'joint_linear_velocity', 'joint_angular_velocity', 'joint_force', 'joint_torque']}" />
-        <!-- <config key="receive" value="{'montessori_object_2_ref': ['position', 'quaternion'], 'montessori_object_3_ref': ['position', 'quaternion'], 'montessori_object_5_ref': ['position', 'quaternion'], 'montessori_object_6_ref': ['position', 'quaternion']}" /> -->
-      </instance>
-    </plugin>
-  </extension>
 </mujoco>
