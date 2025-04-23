@@ -3,8 +3,8 @@ pyside6
 pyopengl
 jinja2
 
-# OWL
-owlready2
-
 # Knowledge
-inflection
+owlready2
+numpy
+rdflib
+lxml
