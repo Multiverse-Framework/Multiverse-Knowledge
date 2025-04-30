@@ -5,6 +5,8 @@ project(KnowRobConnector)
 set(KNOWROB_CONNECTOR knowrob_connector)
 set(CMAKE_CXX_STANDARD 17)
 
+set(Python3_EXECUTABLE "python3" CACHE STRING "Path to the Python executable")
+
 function(build_knowrob_connector)
     add_library(${KNOWROB_CONNECTOR} SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/knowrob_connector.cpp)
     target_include_directories(${KNOWROB_CONNECTOR} PRIVATE 
@@ -20,11 +22,14 @@ function(build_knowrob_connector)
         # Find the installed Python interpreter
         find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
-        # Extract major and minor version (e.g., 3.10 -> 310)
-        string(REGEX REPLACE "\\." "" PYTHON_VERSION_SUFFIX "${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+        execute_process(
+            COMMAND ${Python3_EXECUTABLE}-config --extension-suffix
+            OUTPUT_VARIABLE PYTHON3_SUFFIX
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
 
         # Construct the library filename
-        set(KNOWROB_PYTHON_LIB "libknowrob.python${PYTHON_VERSION_SUFFIX}.so")
+        set(KNOWROB_PYTHON_LIB "libknowrob${PYTHON3_SUFFIX}")
 
         target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE 
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.so
