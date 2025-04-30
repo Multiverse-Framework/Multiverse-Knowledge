@@ -16,7 +16,7 @@ if [ -z "$PYTHON_EXECUTABLE" ]; then
 fi
 
 KNOWROB_BUILD_DIR="$PWD"/build/knowrob
-if [ ! -d "$KNOWROB_BUILD_DIR" ]; then
+if [ -d "$KNOWROB_BUILD_DIR" ]; then
     echo "Building KnowRob using CMake: $CMAKE_EXECUTABLE"
     echo "PATH: $PATH"
     echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
@@ -35,8 +35,7 @@ if [ ! -d "$KNOWROB_BUILD_DIR" ]; then
 fi
 
 PYTHON_SUFFIX=$("$PYTHON_EXECUTABLE"-config --extension-suffix)
-cp -f "$KNOWROB_BUILD_DIR"/knowrob_py.so "$PWD"/dist-packages/knowrob"$PYTHON_SUFFIX"
-cp -f "$KNOWROB_BUILD_DIR"/libknowrob"$PYTHON_SUFFIX" "$PWD"/lib/libknowrob"$PYTHON_SUFFIX"
+# cp -f "$KNOWROB_BUILD_DIR"/knowrob_py.so "$PWD"/dist-packages/knowrob"$PYTHON_SUFFIX"
 
 KNOWROB_CONNECTOR_BUILD_DIR="$PWD"/build/knowrob_connector
 if [ ! -d "$KNOWROB_CONNECTOR_BUILD_DIR" ]; then
