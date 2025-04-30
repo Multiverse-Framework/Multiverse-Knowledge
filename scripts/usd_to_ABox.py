@@ -2,6 +2,8 @@
 
 import argparse
 import os
+from configure import configure
+configure()
 from pxr import Usd, UsdOntology, UsdGeom, UsdPhysics, UsdShade, Gf, Vt
 from owlready2 import onto_path, get_ontology, declare_datatype
 from numpy import float32, float64

@@ -22,7 +22,7 @@ USD_BUILD_DIR=$BUILD_DIR/USD
 if [ ! -d "$USD_BUILD_DIR" ]; then
     PYTHON_EXECUTABLE=python3
     mkdir -p "$USD_BUILD_DIR"
-    USD_PLUGIN_PATH=/media/giangnguyen/Storage/Multiverse-Knowledge/test $PYTHON_EXECUTABLE "$USD_SRC_DIR"/build_scripts/build_usd.py "$USD_BUILD_DIR" \
+    $PYTHON_EXECUTABLE "$USD_SRC_DIR"/build_scripts/build_usd.py "$USD_BUILD_DIR" \
     --no-tests \
     --no-examples \
     --no-tutorials \
@@ -49,6 +49,14 @@ if [ ! -d "$USD_BUILD_DIR" ]; then
     --no-animx-tests
 
     PATH=$CMAKE_DIR/bin:$PATH USD_SRC_DIR=$USD_SRC_DIR USD_BUILD_DIR=$USD_BUILD_DIR PYTHON_EXECUTABLE=$PYTHON_EXECUTABLE ./install.sh
+
+    USD_BIN_DIR=$PWD/USD/linux
+    if [ ! -d "$USD_BIN_DIR" ]; then
+        mkdir -p "$USD_BIN_DIR/lib/"
+        mkdir -p "$USD_BIN_DIR/plugin/"
+    fi
+    cp -rf "$USD_BUILD_DIR"/lib/* "$USD_BIN_DIR"/lib/
+    cp -rf "$USD_BUILD_DIR"/plugin/* "$USD_BIN_DIR"/plugin/
 fi
 
 end_time=$(date +%s)

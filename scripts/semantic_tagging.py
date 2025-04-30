@@ -3,6 +3,8 @@
 import argparse
 import shutil
 import os
+from configure import configure
+configure()
 from pxr import Usd, UsdGeom, UsdOntology
 
 

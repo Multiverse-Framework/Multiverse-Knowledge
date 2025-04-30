@@ -3,6 +3,8 @@
 import argparse
 import os
 import shutil
+from configure import configure
+configure()
 from pxr import Usd, UsdOntology
 from owlready2 import onto_path, get_ontology
 import re
