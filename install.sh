@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
-# Check if USD_SRC_DIR or USD_BUILD_DIR exists
-if [ -z "$USD_SRC_DIR" ] || [ -z "$USD_BUILD_DIR" ]; then
-    echo "USD_SRC_DIR or USD_BUILD_DIR is unset." >&2
+# Check if USD_SRC_DIR or USD_INSTALL_DIR exists
+if [ -z "$USD_SRC_DIR" ] || [ -z "$USD_INSTALL_DIR" ]; then
+    echo "USD_SRC_DIR or USD_INSTALL_DIR is unset." >&2
     exit 1
 else
     echo "USD_SRC_DIR is set to: $USD_SRC_DIR"
-    echo "USD_BUILD_DIR is set to: $USD_BUILD_DIR"
+    echo "USD_INSTALL_DIR is set to: $USD_INSTALL_DIR"
     
     cp -r USD/plugin "$USD_SRC_DIR"
     
@@ -14,7 +14,7 @@ else
     for USD_PLUGIN in "$USD_SRC_DIR"/plugin/*; do
         if [ -d "$USD_PLUGIN" ]; then
             # Execute your command within each folder
-            (cd "$USD_PLUGIN" && "$USD_BUILD_DIR"/bin/usdGenSchema schema.usda)
+            (cd "$USD_PLUGIN" && "$USD_INSTALL_DIR"/bin/usdGenSchema schema.usda)
         fi
     done
     
@@ -42,29 +42,29 @@ else
         printf '\n%s' "$LINE_TO_ADD" >> "$USD_ONTOLOGY_CMAKE_PATH"
     fi
     
-    $PYTHON_EXECUTABLE "$USD_SRC_DIR"/build_scripts/build_usd.py "$USD_BUILD_DIR" \
-    --no-tests \
-    --no-examples \
-    --no-tutorials \
-    --no-tools \
-    --no-docs \
-    --no-python-docs \
-    --python \
-    --prefer-speed-over-safety \
-    --no-debug-python \
-    --no-imaging \
-    --no-ptex \
-    --no-openvdb \
-    --no-usdview \
-    --no-embree \
-    --no-openimageio \
-    --no-opencolorio \
-    --no-alembic \
-    --no-hdf5 \
-    --no-draco \
-    --no-materialx \
-    --no-onetbb \
-    --no-usdValidation \
-    --no-mayapy-tests \
-    --no-animx-tests
+    $PYTHON_EXECUTABLE "$USD_SRC_DIR"/build_scripts/build_usd.py "$USD_INSTALL_DIR" \
+        --no-tests \
+        --no-examples \
+        --no-tutorials \
+        --no-tools \
+        --no-docs \
+        --no-python-docs \
+        --python \
+        --prefer-speed-over-safety \
+        --no-debug-python \
+        --no-imaging \
+        --no-ptex \
+        --no-openvdb \
+        --no-usdview \
+        --no-embree \
+        --no-openimageio \
+        --no-opencolorio \
+        --no-alembic \
+        --no-hdf5 \
+        --no-draco \
+        --no-materialx \
+        --no-onetbb \
+        --no-usdValidation \
+        --no-mayapy-tests \
+        --no-animx-tests
 fi

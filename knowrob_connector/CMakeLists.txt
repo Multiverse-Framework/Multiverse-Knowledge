@@ -29,11 +29,16 @@ function(build_knowrob_connector)
         )
 
         # Construct the library filename
-        set(KNOWROB_PYTHON_LIB "libknowrob${PYTHON3_SUFFIX}")
+        string(REPLACE ".so" "" PYTHON3_SUFFIX_BASE "${PYTHON3_SUFFIX}")
+        message(STATUS "Build with KnowRob with suffix ${PYTHON3_SUFFIX_BASE}")
+        set(KNOWROB_PYTHON_LIB "knowrob${PYTHON3_SUFFIX_BASE}")
 
+        target_link_directories(${KNOWROB_CONNECTOR} PRIVATE 
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib
+        )
         target_link_libraries(${KNOWROB_CONNECTOR} PRIVATE 
-            ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmultiverse_client_json.so
-            ${CMAKE_CURRENT_SOURCE_DIR}/lib/${KNOWROB_PYTHON_LIB}
+            multiverse_client_json
+            ${KNOWROB_PYTHON_LIB}
         )
         install(TARGETS ${KNOWROB_CONNECTOR} DESTINATION 
             ${CMAKE_CURRENT_SOURCE_DIR}/lib

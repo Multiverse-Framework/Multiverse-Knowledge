@@ -6,7 +6,7 @@
 #include <map>
 #include <set>
 
-std::map<std::string, size_t> attribute_map_double = {
+static std::map<std::string, size_t> attribute_map_double = {
     {"", 0},
     {"time", 1},
     {"position", 3},
