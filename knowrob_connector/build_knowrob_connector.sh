@@ -15,11 +15,11 @@ if [ ! -d "$DBoost_ROOT" ]; then
 fi
 
 if [ -z "$PYTHON_EXECUTABLE" ]; then
-    PYTHON_EXECUTABLE=$(which python3)
+    PYTHON_EXECUTABLE=$(which python3.12)
 fi
 
 KNOWROB_BUILD_DIR="$PWD"/build/knowrob
-if [ ! -d "$KNOWROB_BUILD_DIR" ]; then
+if [ ! -f "$KNOWROB_BUILD_DIR/knowrob_py.so" ]; then
     echo "Building KnowRob using CMake: $CMAKE_EXECUTABLE"
     echo "PATH: $PATH"
     echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"

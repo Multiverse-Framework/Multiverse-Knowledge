@@ -544,6 +544,39 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
             ./b2 --prefix="$BOOST_INSTALL_DIR" --build-dir=../build-$ver python=$ver variant=release threading=multi link=shared runtime-link=shared install
         done
     fi
+
+    MONGOC_INSTALL_DIR=$INSTALL_DIR/mongoc
+    PKG_CONFIG_PATH="$MONGOC_INSTALL_DIR"/lib/pkgconfig:"$PKG_CONFIG_PATH"
+    if [ ! -d "$MONGOC_INSTALL_DIR" ]; then
+        set -e  # Exit immediately if a command fails
+        set -o pipefail
+        
+        # Create a working directory
+        MONGOC_SRC_DIR=$EXT_DIR/mongoc
+        MONGOC_BUILD_DIR=$MONGOC_SRC_DIR/build
+        mkdir -p "$MONGOC_BUILD_DIR"
+        cd "$MONGOC_SRC_DIR" || exit
+        
+        # ==============================
+        # 1. Build and Install mongoc
+        # ==============================
+        echo "📦 Building mongoc..."
+        VERSION="2.0.0"
+        wget -c "https://github.com/mongodb/mongo-c-driver/archive/refs/tags/$VERSION.tar.gz" \
+            --output-document="mongo-c-driver-$VERSION.tar.gz"
+        tar xf "mongo-c-driver-$VERSION.tar.gz"
+        mkdir -p "$MONGOC_BUILD_DIR"
+        cd "$MONGOC_SRC_DIR/mongo-c-driver-$VERSION" || exit
+        $CMAKE_EXECUTABLE -S . -B "$MONGOC_BUILD_DIR" \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DBUILD_VERSION="$VERSION" \
+            -DENABLE_MONGOC=OFF
+        $CMAKE_EXECUTABLE --build "$MONGOC_BUILD_DIR" --config RelWithDebInfo --parallel 
+        $CMAKE_EXECUTABLE --install "$MONGOC_BUILD_DIR" --prefix "$MONGOC_INSTALL_DIR" --config RelWithDebInfo
+        $CMAKE_EXECUTABLE -D ENABLE_MONGOC=ON "$MONGOC_BUILD_DIR"
+        $CMAKE_EXECUTABLE --build "$MONGOC_BUILD_DIR" --config RelWithDebInfo --parallel
+        $CMAKE_EXECUTABLE --install "$MONGOC_BUILD_DIR" --prefix "$MONGOC_INSTALL_DIR" --config RelWithDebInfo
+    fi
     PATH=$PATH LD_LIBRARY_PATH="$LD_LIBRARY_PATH" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" CMAKE_EXECUTABLE="$CMAKE_EXECUTABLE" DBoost_ROOT="$BOOST_INSTALL_DIR" "$KNOWROB_CONNECTOR_DIR"/build_knowrob_connector.sh
 fi
 
