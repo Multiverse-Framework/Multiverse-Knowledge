@@ -15,7 +15,11 @@ if [ ! -d "$DBoost_ROOT" ]; then
 fi
 
 if [ -z "$PYTHON_EXECUTABLE" ]; then
-    PYTHON_EXECUTABLE=$(which python3.12)
+    PYTHON_EXECUTABLE=$(which python3.8)
+fi
+if [ ! -f "$PYTHON_EXECUTABLE" ]; then
+    echo "python3 does not exist."
+    exit 1
 fi
 
 KNOWROB_BUILD_DIR="$PWD"/build/knowrob

@@ -103,7 +103,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
     LD_LIBRARY_PATH="$REDLAND_INSTALL_DIR"/lib:"$REDLAND_DEPS_INSTALL_DIR"/lib
     LDFLAGS="-L$REDLAND_INSTALL_DIR -L$REDLAND_DEPS_INSTALL_DIR"
     PKG_CONFIG_PATH="$REDLAND_INSTALL_DIR"/lib/pkgconfig:"$REDLAND_DEPS_INSTALL_DIR"/lib/pkgconfig:"$REDLAND_DEPS_INSTALL_DIR"/share/pkgconfig
-    if [ ! -d "$REDLAND_INSTALL_DIR" ]; then
+    if [ -d "$REDLAND_INSTALL_DIR" ]; then
         set -e  # Exit immediately if a command fails
         set -o pipefail
         
@@ -116,17 +116,43 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         
         echo "🔍 Preparing to build the following dependencies required for Redland:"
         echo "1. yajl"
-        echo "2. openssl"
-        echo "3. libcurl"
-        echo "4. Raptor2"
-        echo "5. Rasqal"
-        echo "6. bison"
-        echo "7. flex"
-        echo "8. gawk"
-        echo "9. gperf"
-        echo "10. Virtuoso"
+        echo "2. libxslt"
+        echo "3. openssl"
+        echo "4. OpenLDAP"
+        echo "5. libcurl"
+        echo "6. Raptor2"
+        echo "7. libuuid (from util-linux)"
+        echo "8. Rasqal"
+        echo "9. bison"
+        echo "10. flex"
+        echo "11. gawk"
+        echo "12. gperf"
+        echo "13. Virtuoso"
         
         
+        # ==============================
+        # 1. Build and Install liblzma (xz)
+        # ==============================
+        echo "📦 Building liblzma (xz)..."
+        wget -c https://github.com/tukaani-project/xz/releases/download/v5.8.1/xz-5.8.1.tar.gz -O xz-5.8.1.tar.gz
+        tar xf xz-5.8.1.tar.gz
+        cd xz-5.8.1
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-xz --disable-xzdec --disable-lzmadec --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        make -j$(nproc)
+        make install
+        cd "$REDLAND_SRC_DIR"
+
+        # ==============================
+        # 1. Build and Install libxml2
+        # ==============================
+        wget -c http://xmlsoft.org/sources/libxml2-2.9.12.tar.gz -O libxml2-2.9.12.tar.gz
+        tar xf libxml2-2.9.12.tar.gz
+        cd libxml2-2.9.12
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-python=no --with-lzma="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        make -j$(nproc)
+        make install
+        cd "$REDLAND_SRC_DIR"
+
         # ==============================
         # 1. Build and Install yajl
         # ==============================
@@ -162,32 +188,44 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         make install
         cd "$REDLAND_SRC_DIR"
 
-        # # ==============================
-        # # 4. Build and Install OpenLDAP
-        # # ==============================
-        # echo "📦 Building libcurl..."
-        # wget -c https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.9.tgz -O openldap-2.6.9.tgz
-        # tar -xzf openldap-2.6.9.tgz
-        # cd openldap-2.6.9
-        # ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-ssl="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
-        # make -j$(nproc)
-        # make install
-        # cd "$REDLAND_SRC_DIR"
-        
         # ==============================
-        # 4. Build and Install libcurl
+        # 4. Build and Install sasl
+        # ==============================
+        echo "📦 Building cyrus-sasl..."
+        wget -c https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz -O cyrus-sasl-2.1.28.tar.gz
+        tar xf cyrus-sasl-2.1.28.tar.gz
+        cd cyrus-sasl-2.1.28
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-gssapi --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        make -j$(nproc)
+        make install
+        cd "$REDLAND_SRC_DIR"
+
+        # ==============================
+        # 4. Build and Install OpenLDAP
         # ==============================
         echo "📦 Building libcurl..."
-        wget -c https://curl.se/download/curl-8.13.0.tar.gz -O curl-8.13.0.tar.gz
-        tar -xzf curl-8.13.0.tar.gz
-        cd curl-8.13.0
-        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --without-libpsl --with-ssl="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        wget -c https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.9.tgz -O openldap-2.6.9.tgz
+        tar -xzf openldap-2.6.9.tgz
+        cd openldap-2.6.9
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-ssl="$REDLAND_DEPS_INSTALL_DIR" --with-sasl2="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 5. Build and Install Raptor2
+        # 5. Build and Install libcurl
+        # ==============================
+        echo "📦 Building libcurl..."
+        wget -c https://curl.se/download/curl-8.13.0.tar.gz -O curl-8.13.0.tar.gz
+        tar -xzf curl-8.13.0.tar.gz
+        cd curl-8.13.0
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --without-libpsl --with-ssl="$REDLAND_DEPS_INSTALL_DIR" --with-ldap="$REDLAND_DEPS_INSTALL_DIR" --with-lber="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        make -j$(nproc)
+        make install
+        cd "$REDLAND_SRC_DIR"
+        
+        # ==============================
+        # 6. Build and Install Raptor2
         # ==============================
         echo "📦 Building Raptor2..."
         wget -c http://download.librdf.org/source/raptor2-2.0.16.tar.gz -O raptor2-2.0.16.tar.gz
@@ -199,7 +237,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
 
         # ==============================
-        # 2. Build and Install LibUUID
+        # 7. Build and Install LibUUID
         # ==============================
         echo "📦 Building libuuid (from util-linux)..."
         wget -c https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.tar.xz -O util-linux-2.41.tar.xz
@@ -211,7 +249,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 6. Build and Install Rasqal
+        # 8. Build and Install Rasqal
         # ==============================
         echo "📦 Building Rasqal..."
         wget -c http://download.librdf.org/source/rasqal-0.9.33.tar.gz -O rasqal-0.9.33.tar.gz
@@ -223,7 +261,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 7. Build and Install bison
+        # 9. Build and Install bison
         # ==============================
         echo "📦 Building bison..."
         wget -c https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.gz -O bison-3.8.2.tar.gz
@@ -235,7 +273,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 8. Build and Install flex
+        # 10. Build and Install flex
         # ==============================
         echo "📦 Building flex..."
         wget -c https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz -O flex-2.6.4.tar.gz
@@ -247,7 +285,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 9. Build and Install gawk
+        # 11. Build and Install gawk
         # ==============================
         echo "📦 Building gawk..."
         wget https://ftp.gnu.org/gnu/gawk/gawk-5.2.2.tar.gz -O gawk-5.2.2.tar.gz
@@ -259,7 +297,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 10. Build and Install gperf
+        # 12. Build and Install gperf
         # ==============================
         echo "📦 Building gperf..."
         wget https://ftp.gnu.org/gnu/gperf/gperf-3.1.tar.gz -O gperf-3.1.tar.gz
@@ -271,7 +309,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 11. Build and Install Virtuoso
+        # 13. Build and Install Virtuoso
         # ==============================
         echo "📦 Building Virtuoso..."
         wget -c https://github.com/openlink/virtuoso-opensource/archive/refs/tags/v7.2.14.tar.gz -O v7.2.14.tar.gz
@@ -284,7 +322,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 12. Build and Install Redland
+        # 14. Build and Install Redland
         # ==============================
         echo "📦 Building Redland..."
         wget -c http://download.librdf.org/source/redland-1.0.17.tar.gz -O redland-1.0.17.tar.gz
@@ -464,10 +502,10 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         make -j$(nproc)
         make install
         
-        # # ==============================
-        # # 12. Build and Install SWI-Prolog
-        # # ==============================
-        # echo "📦 Building SWI-Prolog..."
+        # ==============================
+        # 12. Build and Install SWI-Prolog
+        # ==============================
+        echo "📦 Building SWI-Prolog..."
         
         # git clone https://github.com/SWI-Prolog/swipl-devel.git --depth 1 --recursive "$SWIPL_SRC_DIR/swipl-devel"
         sed -i '/#ifdef FILTER_LZOP/,/#endif/ s/FILTER_LZMA/FILTER_LZOP/g' "$SWIPL_SRC_DIR/swipl-devel/packages/archive/archive4pl.c"
