@@ -115,72 +115,97 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         cd "$REDLAND_SRC_DIR" || exit
         
         echo "🔍 Preparing to build the following dependencies required for Redland:"
-        echo "1. libxml2"
-        echo "2. libxslt"
-        echo "3. yajl"
+        echo "1. yajl"
+        echo "2. openssl"
+        echo "3. libcurl"
         echo "4. Raptor2"
-        echo "5. libuuid (from util-linux)"
-        echo "6. Rasqal"
-        echo "7. bison"
-        echo "8. flex"
-        echo "9. gawk"
-        echo "10. gperf"
-        echo "11. Virtuoso"
+        echo "5. Rasqal"
+        echo "6. bison"
+        echo "7. flex"
+        echo "8. gawk"
+        echo "9. gperf"
+        echo "10. Virtuoso"
+        
         
         # ==============================
-        # 1. Build and Install libxml2
+        # 1. Build and Install yajl
         # ==============================
-        wget -c http://xmlsoft.org/sources/libxml2-2.9.11.tar.gz -O libxml2-2.9.11.tar.gz
-        tar xf libxml2-2.9.11.tar.gz
-        cd libxml2-2.9.11
-        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-python=no --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        wget -c https://github.com/lloyd/yajl/archive/refs/tags/2.1.0.tar.gz -O yajl-2.1.0.tar.gz
+        tar xf yajl-2.1.0.tar.gz
+        cd yajl-2.1.0
+        mkdir -p build && cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX="$REDLAND_DEPS_INSTALL_DIR" -DYAJL_BUILD_STATIC_LIBS=ON
         make -j$(nproc)
         make install
         cd "$REDLAND_SRC_DIR"
-        
+
         # ==============================
         # 2. Build and Install libxslt
         # ==============================
         wget -c http://xmlsoft.org/sources/libxslt-1.1.34.tar.gz -O libxslt-1.1.34.tar.gz
         tar xf libxslt-1.1.34.tar.gz
         cd libxslt-1.1.34
-        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-libxml="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 3. Build and Install yajl
+        # 3. Build and Install openssl
         # ==============================
-        wget -c https://github.com/lloyd/yajl/archive/refs/tags/2.1.0.tar.gz -O yajl-2.1.0.tar.gz
-        tar xf yajl-2.1.0.tar.gz
-        cd yajl-2.1.0
-        mkdir -p build && cd build
-        $CMAKE_EXECUTABLE .. -DCMAKE_INSTALL_PREFIX="$REDLAND_DEPS_INSTALL_DIR" -DYAJL_BUILD_STATIC_LIBS=ON
+        echo "📦 Building openssl..."
+        wget -c https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1f/openssl-1.1.1f.tar.gz -O openssl-1.1.1f.tar.gz
+        tar xf openssl-1.1.1f.tar.gz
+        cd openssl-1.1.1f
+        ./Configure --prefix="$REDLAND_DEPS_INSTALL_DIR" enable-ocsp --openssldir="$REDLAND_DEPS_INSTALL_DIR"/ssl no-shared -fPIC linux-x86_64
+        make -j$(nproc)
+        make install
+        cd "$REDLAND_SRC_DIR"
+
+        # # ==============================
+        # # 4. Build and Install OpenLDAP
+        # # ==============================
+        # echo "📦 Building libcurl..."
+        # wget -c https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.9.tgz -O openldap-2.6.9.tgz
+        # tar -xzf openldap-2.6.9.tgz
+        # cd openldap-2.6.9
+        # ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-ssl="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        # make -j$(nproc)
+        # make install
+        # cd "$REDLAND_SRC_DIR"
+        
+        # ==============================
+        # 4. Build and Install libcurl
+        # ==============================
+        echo "📦 Building libcurl..."
+        wget -c https://curl.se/download/curl-8.13.0.tar.gz -O curl-8.13.0.tar.gz
+        tar -xzf curl-8.13.0.tar.gz
+        cd curl-8.13.0
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --without-libpsl --with-ssl="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         cd "$REDLAND_SRC_DIR"
         
         # ==============================
-        # 4. Build and Install Raptor2
+        # 5. Build and Install Raptor2
         # ==============================
         echo "📦 Building Raptor2..."
-        wget -c http://download.librdf.org/source/raptor2-2.0.15.tar.gz -O raptor2-2.0.15.tar.gz
-        tar xf raptor2-2.0.15.tar.gz
-        cd raptor2-2.0.15
-        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        wget -c http://download.librdf.org/source/raptor2-2.0.16.tar.gz -O raptor2-2.0.16.tar.gz
+        tar xf raptor2-2.0.16.tar.gz
+        cd raptor2-2.0.16
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --with-curl="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         cd "$REDLAND_SRC_DIR"
 
         # ==============================
-        # 5. Build and Install LibUUID
+        # 2. Build and Install LibUUID
         # ==============================
         echo "📦 Building libuuid (from util-linux)..."
-        wget https://www.mirrorservice.org/sites/ftp.ossp.org/pkg/lib/uuid/uuid-1.6.2.tar.gz -O uuid-1.6.2.tar.gz
-        tar xf uuid-1.6.2.tar.gz
-        cd uuid-1.6.2
-        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
+        wget -c https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.tar.xz -O util-linux-2.41.tar.xz
+        tar xf util-linux-2.41.tar.xz
+        cd util-linux-2.41
+        ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-all-programs --disable-nls --enable-libuuid -disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         cd "$REDLAND_SRC_DIR"
@@ -201,7 +226,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 7. Build and Install bison
         # ==============================
         echo "📦 Building bison..."
-        wget https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.gz -O bison-3.8.2.tar.gz
+        wget -c https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.gz -O bison-3.8.2.tar.gz
         tar xf bison-3.8.2.tar.gz
         cd bison-3.8.2
         ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
@@ -213,7 +238,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 8. Build and Install flex
         # ==============================
         echo "📦 Building flex..."
-        wget https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz -O flex-2.6.4.tar.gz
+        wget -c https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz -O flex-2.6.4.tar.gz
         tar xf flex-2.6.4.tar.gz
         cd flex-2.6.4
         ./configure --prefix="$REDLAND_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
@@ -271,7 +296,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         sed -i 's/\bmy_bool\b/bool/g' src/rdf_storage_mysql.c
         
         # Configure, build, and install
-        ./configure --with-raptor2="$REDLAND_DEPS_INSTALL_DIR" --with-rasqal="$REDLAND_DEPS_INSTALL_DIR" --with-virtuoso="$REDLAND_DEPS_INSTALL_DIR" --prefix="$REDLAND_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" LDFLAGS="$LDFLAGS"
+        ./configure --with-raptor2="$REDLAND_DEPS_INSTALL_DIR" --with-curl="$REDLAND_DEPS_INSTALL_DIR" --with-rasqal="$REDLAND_DEPS_INSTALL_DIR" --with-virtuoso="$REDLAND_DEPS_INSTALL_DIR" --prefix="$REDLAND_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" LDFLAGS="$LDFLAGS"
         make -j$(nproc)
         make install
         
@@ -295,7 +320,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         mkdir -p "$SWIPL_DEPS_INSTALL_DIR"
         cd "$SWIPL_SRC_DIR" || exit
         
-        echo "🔍 Preparing to build the following dependencies required for Redland:"
+        echo "🔍 Preparing to build the following dependencies required for SWI-Prolog:"
         echo "1. gperftools (libtcmalloc)"
         echo "2. libuuid (from util-linux)"
         echo "3. liblzma (xz)"
@@ -312,19 +337,19 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 1. Build and Install gperftools (libtcmalloc)
         # ==============================
         echo "📦 Building gperftools (libtcmalloc)..."
-        wget -c https://github.com/gperftools/gperftools/releases/download/gperftools-2.12/gperftools-2.12.tar.gz -O gperftools-2.12.tar.gz
-        tar xf gperftools-2.12.tar.gz
-        cd gperftools-2.12
+        wget -c https://github.com/gperftools/gperftools/releases/download/gperftools-2.16/gperftools-2.16.tar.gz -O gperftools-2.16.tar.gz
+        tar xf gperftools-2.16.tar.gz
+        cd gperftools-2.16
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         cd "$SWIPL_SRC_DIR"
         
         # ==============================
-        # 2. Build and Install LibUUID
+        # 2. Build and Install uuid
         # ==============================
-        echo "📦 Building libuuid (from util-linux)..."
-        wget https://www.mirrorservice.org/sites/ftp.ossp.org/pkg/lib/uuid/uuid-1.6.2.tar.gz -O uuid-1.6.2.tar.gz
+        echo "📦 Building uuid (from OSSP)"
+        wget -c https://www.mirrorservice.org/sites/ftp.ossp.org/pkg/lib/uuid/uuid-1.6.2.tar.gz -O uuid-1.6.2.tar.gz
         tar xf uuid-1.6.2.tar.gz
         cd uuid-1.6.2
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
@@ -336,9 +361,9 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 3. Build and Install liblzma (xz)
         # ==============================
         echo "📦 Building liblzma (xz)..."
-        wget -c https://tukaani.org/xz/xz-5.4.5.tar.gz -O xz-5.4.5.tar.gz
-        tar xf xz-5.4.5.tar.gz
-        cd xz-5.4.5
+        wget -c https://github.com/tukaani-project/xz/releases/download/v5.8.1/xz-5.8.1.tar.gz -O xz-5.8.1.tar.gz
+        tar xf xz-5.8.1.tar.gz
+        cd xz-5.8.1
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-xz --disable-xzdec --disable-lzmadec --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
@@ -348,9 +373,9 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 4. Build and Install LibArchive
         # ==============================
         echo "📦 Building libarchive..."
-        wget -c https://www.libarchive.org/downloads/libarchive-3.7.2.tar.xz -O libarchive-3.7.2.tar.xz
-        tar xf libarchive-3.7.2.tar.xz
-        cd libarchive-3.7.2
+        wget -c https://www.libarchive.org/downloads/libarchive-3.7.9.tar.xz -O libarchive-3.7.9.tar.xz
+        tar xf libarchive-3.7.9.tar.xz
+        cd libarchive-3.7.9
         ./configure --with-lzma="$SWIPL_DEPS_INSTALL_DIR" --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
@@ -395,7 +420,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # ==============================
         # 8. Build and Install GMP
         # ==============================
-        wget https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz -O gmp-6.3.0.tar.xz
+        wget -c https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz -O gmp-6.3.0.tar.xz
         tar xf gmp-6.3.0.tar.xz
         cd gmp-6.3.0
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --enable-assembly=no --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
@@ -408,9 +433,9 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 9. Build and Install Readline
         # ==============================
         echo "📦 Building Readline..."
-        wget https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz -O readline-8.2.tar.gz
-        tar xf readline-8.2.tar.gz
-        cd readline-8.2
+        wget -c https://ftp.gnu.org/gnu/readline/readline-8.2.13.tar.gz -O readline-8.2.13.tar.gz
+        tar xf readline-8.2.13.tar.gz
+        cd readline-8.2.13
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
@@ -420,9 +445,9 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 10. Build and Install libedit
         # ==============================
         echo "📦 Building libedit..."
-        wget https://thrysoee.dk/editline/libedit-20230828-3.1.tar.gz -O libedit-20230828-3.1.tar.gz
-        tar xf libedit-20230828-3.1.tar.gz
-        cd libedit-20230828-3.1
+        wget -c https://thrysoee.dk/editline/libedit-20250104-3.1.tar.gz -O libedit-20250104-3.1.tar.gz
+        tar xf libedit-20250104-3.1.tar.gz
+        cd libedit-20250104-3.1
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
@@ -432,19 +457,19 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 11. Build and Install libtool
         # ==============================
         echo "📦 Building libtool..."
-        wget https://ftp.gnu.org/gnu/libtool/libtool-2.4.7.tar.gz -O libtool-2.4.7.tar.gz
-        tar xf libtool-2.4.7.tar.gz
-        cd libtool-2.4.7
+        wget -c https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz -O libtool-2.5.4.tar.xz
+        tar xf libtool-2.5.4.tar.xz
+        cd libtool-2.5.4
         ./configure --prefix="$SWIPL_DEPS_INSTALL_DIR" --disable-shared --enable-static CFLAGS="-fPIC" CXXFLAGS="-fPIC"
         make -j$(nproc)
         make install
         
-        # ==============================
-        # 12. Build and Install SWI-Prolog
-        # ==============================
-        echo "📦 Building SWI-Prolog..."
+        # # ==============================
+        # # 12. Build and Install SWI-Prolog
+        # # ==============================
+        # echo "📦 Building SWI-Prolog..."
         
-        git clone https://github.com/SWI-Prolog/swipl-devel.git --depth 1 --recursive "$SWIPL_SRC_DIR/swipl-devel"
+        # git clone https://github.com/SWI-Prolog/swipl-devel.git --depth 1 --recursive "$SWIPL_SRC_DIR/swipl-devel"
         sed -i '/#ifdef FILTER_LZOP/,/#endif/ s/FILTER_LZMA/FILTER_LZOP/g' "$SWIPL_SRC_DIR/swipl-devel/packages/archive/archive4pl.c"
         SWIPL_BUILD_DIR="$SWIPL_SRC_DIR"/build
         mkdir -p "$SWIPL_INSTALL_DIR"
@@ -481,7 +506,7 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         $NINJA_EXECUTABLE -C "$SWIPL_BUILD_DIR"
         $NINJA_EXECUTABLE install -C "$SWIPL_BUILD_DIR"
     fi
-
+    
     SPDLOG_INSTALL_DIR=$INSTALL_DIR/spdlog
     PKG_CONFIG_PATH="$SPDLOG_INSTALL_DIR"/lib/pkgconfig:"$PKG_CONFIG_PATH"
     if [ ! -d "$SPDLOG_INSTALL_DIR" ]; then
@@ -499,30 +524,30 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         # 1. Build and Install spdlog
         # ==============================
         echo "📦 Building spdlog..."
-        wget -c https://github.com/gabime/spdlog/archive/refs/tags/v1.13.0.tar.gz -O spdlog-1.13.0.tar.gz
-        tar xf spdlog-1.13.0.tar.gz
+        wget -c https://github.com/gabime/spdlog/archive/refs/tags/v1.15.2.tar.gz -O spdlog-1.15.2.tar.gz
+        tar xf spdlog-1.15.2.tar.gz
         mkdir -p "$SPDLOG_BUILD_DIR"
-        $CMAKE_EXECUTABLE -B "$SPDLOG_BUILD_DIR" -S spdlog-1.13.0 \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX="$SPDLOG_INSTALL_DIR" \
-            -DSPDLOG_BUILD_SHARED=OFF \
-            -DSPDLOG_BUILD_TESTS=OFF
-
+        $CMAKE_EXECUTABLE -B "$SPDLOG_BUILD_DIR" -S spdlog-1.15.2 \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$SPDLOG_INSTALL_DIR" \
+        -DSPDLOG_BUILD_SHARED=OFF \
+        -DSPDLOG_BUILD_TESTS=OFF
+        
         $CMAKE_EXECUTABLE --build "$SPDLOG_BUILD_DIR" -j$(nproc)
         $CMAKE_EXECUTABLE --install "$SPDLOG_BUILD_DIR"
     fi
-
+    
     BOOST_INSTALL_DIR=$INSTALL_DIR/boost
     if [ ! -d "$BOOST_INSTALL_DIR" ]; then
         set -e  # Exit immediately if a command fails
         set -o pipefail
-
+        
         # Create a working directory
         BOOST_SRC_DIR=$EXT_DIR/boost
         mkdir -p "$BOOST_SRC_DIR"
         mkdir -p "$BOOST_INSTALL_DIR"
         cd "$BOOST_SRC_DIR" || exit
-
+        
         # ==============================
         # 1. Build and Install boost
         # ==============================
@@ -541,10 +566,10 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         done
         for ver in "${PYTHONS[@]}"; do
             echo "Building Boost.Python for Python $ver..."
-            ./b2 --prefix="$BOOST_INSTALL_DIR" --build-dir=../build-$ver python=$ver variant=release threading=multi link=shared runtime-link=shared install
+            ./b2 --prefix="$BOOST_INSTALL_DIR" --build-dir=../build-"$ver" python="$ver" variant=release threading=multi link=shared runtime-link=shared install
         done
     fi
-
+    
     MONGOC_INSTALL_DIR=$INSTALL_DIR/mongoc
     PKG_CONFIG_PATH="$MONGOC_INSTALL_DIR"/lib/pkgconfig:"$PKG_CONFIG_PATH"
     if [ ! -d "$MONGOC_INSTALL_DIR" ]; then
@@ -563,15 +588,15 @@ if [ "$KNOWROB_CONNECTOR_ENABLED" = true ]; then
         echo "📦 Building mongoc..."
         VERSION="2.0.0"
         wget -c "https://github.com/mongodb/mongo-c-driver/archive/refs/tags/$VERSION.tar.gz" \
-            --output-document="mongo-c-driver-$VERSION.tar.gz"
+        --output-document="mongo-c-driver-$VERSION.tar.gz"
         tar xf "mongo-c-driver-$VERSION.tar.gz"
         mkdir -p "$MONGOC_BUILD_DIR"
-        cd "$MONGOC_SRC_DIR/mongo-c-driver-$VERSION" || exit
+        cd "mongo-c-driver-$VERSION" || exit
         $CMAKE_EXECUTABLE -S . -B "$MONGOC_BUILD_DIR" \
-            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-            -DBUILD_VERSION="$VERSION" \
-            -DENABLE_MONGOC=OFF
-        $CMAKE_EXECUTABLE --build "$MONGOC_BUILD_DIR" --config RelWithDebInfo --parallel 
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DBUILD_VERSION="$VERSION" \
+        -DENABLE_MONGOC=OFF
+        $CMAKE_EXECUTABLE --build "$MONGOC_BUILD_DIR" --config RelWithDebInfo --parallel
         $CMAKE_EXECUTABLE --install "$MONGOC_BUILD_DIR" --prefix "$MONGOC_INSTALL_DIR" --config RelWithDebInfo
         $CMAKE_EXECUTABLE -D ENABLE_MONGOC=ON "$MONGOC_BUILD_DIR"
         $CMAKE_EXECUTABLE --build "$MONGOC_BUILD_DIR" --config RelWithDebInfo --parallel
