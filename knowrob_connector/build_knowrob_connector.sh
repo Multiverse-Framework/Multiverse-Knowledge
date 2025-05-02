@@ -15,7 +15,7 @@ if [ ! -d "$DBoost_ROOT" ]; then
 fi
 
 if [ -z "$PYTHON_EXECUTABLE" ]; then
-    PYTHON_EXECUTABLE=$(which python3.8)
+    PYTHON_EXECUTABLE=$(which python3)
 fi
 if [ ! -f "$PYTHON_EXECUTABLE" ]; then
     echo "python3 does not exist."
@@ -35,6 +35,8 @@ if [ ! -f "$KNOWROB_BUILD_DIR/knowrob_py.so" ]; then
 
     $CMAKE_EXECUTABLE -S "$KNOWROB_SRC_DIR" -B "$KNOWROB_BUILD_DIR" \
         -DCATKIN=OFF \
+        -DCMAKE_C_COMPILER=gcc-11 \
+        -DCMAKE_CXX_COMPILER=g++-11 \
         -DPYTHON_MODULE_LIBDIR="dist-packages" \
         -DPython3_EXECUTABLE="$PYTHON_EXECUTABLE" \
         -DBoost_ROOT="$DBoost_ROOT" \
