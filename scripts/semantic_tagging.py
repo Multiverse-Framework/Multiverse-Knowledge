@@ -103,6 +103,12 @@ sem_labels = {
     "montessori_object_4": ["_class_YellowBall"],
     "montessori_object_5": ["_class_OrangeCube"],
     "montessori_object_6": ["_class_BlueHighCylinder"],
+    "montessori_hole_1": ["_class_SlotInset"],
+    "montessori_hole_2": ["_class_TriangleInset"],
+    "montessori_hole_3": ["_class_SquareInset"],
+    "montessori_hole_4": ["_class_BigCircleInset"],
+    "montessori_hole_5": ["_class_RectangleInset"],
+    "montessori_hole_6": ["_class_SmallCircleInset"],
 }
 
 sem_TBox = {}
