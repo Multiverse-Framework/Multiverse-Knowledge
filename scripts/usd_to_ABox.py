@@ -225,19 +225,13 @@ def usd_to_owl(in_usd_file: str, in_onto_file: str, out_onto_file: str) -> None:
                             xformOpTranslate_inst = dul_onto.Quality(prim.GetName() + "_xformOp_translate", namespace=dul_onto)
                             prim_inst.hasQuality.append(xformOpTranslate_inst)
 
-                            xformOpTransform_inst.xformOp_translate = [prim.GetAttribute(xformOp).Get()]
+                            xformOpTranslate_inst.xformOp_translate = [prim.GetAttribute(xformOp).Get()]
 
                         if xformOp == "xformOp:rotate":
                             xformOpRotate_inst = dul_onto.Quality(prim.GetName() + "_xformOp_rotate", namespace=dul_onto)
                             prim_inst.hasQuality.append(xformOpRotate_inst)
 
                             xformOpRotate_inst.xformOp_rotate = [prim.GetAttribute(xformOp).Get()]
-
-                        if xformOp == "xformOp:transform":
-                            xformOpTransform_inst = dul_onto.Quality(prim.GetName() + "_xformOp_transform", namespace=dul_onto)
-                            prim_inst.hasQuality.append(xformOpTransform_inst)
-
-                            xformOpTransform_inst.xformOp_transform = [prim.GetAttribute(xformOp).Get()]
 
                         if xformOp == "xformOp:transform":
                             xformOpTransform_inst = dul_onto.Quality(prim.GetName() + "_xformOp_transform", namespace=dul_onto)
